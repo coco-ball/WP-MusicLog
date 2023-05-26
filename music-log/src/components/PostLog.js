@@ -14,6 +14,8 @@ const PostLog = () => {
     artist: "SZA",
     text: "text-input",
   };
+//엘범 커버 사진은 데이터에 포함하지 않나요? 
+//spotify API연동
 
   return (
     <div className="w-screen px-64 flex-col justify-center">
@@ -55,4 +57,24 @@ const PostLog = () => {
 
 export default PostLog;
 
+
+
 //데이터 저장하는 함수 지정한 후 맨 마지막에 alert('오늘의 음악 로그가 저장되었습니다.'); 코드 추가해서 사용자가 자신의 코드가 저장됨을 알게 하면 좋을 것 같아요
+// 저장하기 버튼 클릭 시 데이터 저장하는 함수
+function saveData() {
+  const userId = exData.getElementById(' ').src;
+  const location = document.getElementById('').value;
+  const datetime = document.getElementById('').value;
+  const title = document.getElementById(' ').textContent;
+  const artist = document.getElementById(' ').textContent;
+  const text = document.getElementById('text-input').value;
+
+// 여기서 데이터를 데이터베이스에 저장하는 로직을 추가
+// 데이터베이스에 저장되는 데이터는 albumCover, songInfo, address, currentTime, memo 
+
+  alert('오늘의 음악 로그가 저장되었습니다.');
+}
+
+// 저장하기 버튼에 이벤트 리스너 추가
+const saveButton = document.getElementById('save-button');
+saveButton.addEventListener('click', saveData);
