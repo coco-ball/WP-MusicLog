@@ -1,5 +1,24 @@
 import { useEffect, useState } from "react";
-//import PostLoglist from "src/components/PostLoglist"; 연결!
+import MusicLog from "@/src/components/PostLoglist"; 
+
+// firebase 관련 모듈을 불러옵니다.
+/*
+import { db } from "@/firebase";
+import {
+  collection,
+  query,
+  doc,
+  getDocs,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  orderBy,
+  where
+} from "firebase/firestore";
+*/
+
+// DB의 todos 컬렉션 참조를 만듭니다. 컬렉션 사용시 잘못된 컬렉션 이름 사용을 방지합니다.
+//const postlogCollection = collection(db, "postlogs");
 
 const PostLog = () => {
   const [input, setInput] = useState("");
@@ -17,6 +36,7 @@ const PostLog = () => {
     text: "text-input",
   };
 
+  // firebase 관련 명령
 //albumCover 엘범 커버 사진은 데이터에 포함하지 않나요? 
 //spotify API연동-->userid, 노래 title, artist, album cover.. 불러오기 --> 
 
@@ -65,6 +85,7 @@ export default PostLog;
 
 //데이터 저장하는 함수 지정한 후 맨 마지막에 alert('오늘의 음악 로그가 저장되었습니다.'); 코드 추가해서 사용자가 자신의 코드가 저장됨을 알게 하면 좋을 것 같아요
 // 저장하기 버튼 클릭 시 데이터 저장하는 함수
+/*
 function saveData() {
   const userId = exData.getElementById(' ').textContent;
   const location = document.getElementById('  ').value;
@@ -72,14 +93,14 @@ function saveData() {
   const title = document.getElementById(' ').textContent;
   const artist = document.getElementById(' ').textContent;
   /*const albumCover = exData.getElementById(' ').src;*/
-  const text = document.getElementById('text-input').value;
+  //const text = document.getElementById('text-input').value;
 
 // 여기서 데이터를 데이터베이스에 저장하는 로직을 추가-firebase 연동?
 // 데이터베이스에 저장되는 데이터는 userid, location, datetime, title, artist, text.. *앨범커버도 저장해야?
 
-  alert('오늘의 음악 로그가 저장되었습니다.');
-}
+  //alert('오늘의 음악 로그가 저장되었습니다.');
+//}
 
 // 저장하기 버튼에 이벤트 리스너 추가
-const saveButton = document.getElementById('save-button');
-saveButton.addEventListener('click', saveData);
+//const saveButton = document.getElementById('save-button');
+//saveButton.addEventListener('click', saveData);
