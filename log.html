@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>음악 로그 작성</title>
+  <link href="./musiclog.css" rel="stylesheet">
+</head>
+<body>
+  <div class="flex flex-col p-8">
+    <h1 class="text-3xl font-bold mb-4">음악 로그 작성</h1>
+    <div id="currentTrack" class="flex items-center mb-4">
+      <img id="albumCover" class="w-30 h-30 mr-4" src="" alt="앨범 커버">
+      <div id="trackInfo">
+        <p id="trackTitle" class="font-bold"></p>
+        <p id="trackArtist"></p>
+      </div>
+    </div>
+    <div class="flex mb-4">
+      <p class="mr-2">지금 어디에 계시나요?</p>
+      <input id="locationInput" type="text" class="border p-2 w-10">
+    </div>
+    <p class="mb-2">시간</p>
+    <p id="currentTime" class="mb-4"></p>
+    <p class="mb-2">지금 무엇을 하고 있나요? 간단한 메모를 남겨주세요.</p>
+    <textarea id="memoInput" class="border p-2"></textarea>
+    <button id="saveButton" class="bg-blue-500 text-white py-2 px-4 mt-4">저장하기</button>
+  </div>
+
+  <script>
+    // 외부 API에서 현재 재생 중인 노래 정보를 받아오는 함수 (가정) 스포티파이
+    function getCurrentTrack() {
+      return {
+        albumCover: 'https://example.com/album-cover.jpg',
+        title: '노래 제목',
+        artist: '아티스트',
+      };
+    }
+
+    // 현재 시간 정보를 가져와서 표시하는 함수
+    function setCurrentTime() {
+      const now = new Date();
+      const currentTimeElement = document.getElementById('currentTime');
+      currentTimeElement.textContent = now.toLocaleString();
+    }
+
+    // 저장 버튼 클릭 시 데이터를 database에 저장하는 함수
+    function saveData() {
+      const albumCover = document.getElementById('albumCover').src;
+      const trackTitle = document.getElementById('trackTitle').textContent;
+      const trackArtist = document.getElementById('trackArtist').textContent;
+      const location = document.getElementById('locationInput').value;
+      const memo = document.getElementById('memoInput').value;
+
+      // 여기서 데이터를 database에 저장하는 로직을 구현, (firebase!!!)
+
+      console.log('데이터 저장 완료!');
+      alert("오늘의 음악 로그가 저장되었습니다.");
+    }
+
+    // 페이지 로드 시 초기 데이터를 설정하는 함수
+    function initializePage() {
+      const currentTrack = getCurrentTrack();
+      const albumCoverElement = document.getElementById('albumCover');
+      const trackTitleElement = document.getElementById('trackTitle');
+      const trackArtistElement = document.getElementById('trackArtist');
+
+      // 현재 재생 중인 노래 정보를 업데이트
+      albumCoverElement.src = currentTrack.albumCover;
+      trackTitleElement.textContent = currentTrack.title;
+      trackArtistElement.textContent = currentTrack.artist;
+
+      // 현재 시간을 업데이트 (1초마다 갱신)
+      setCurrentTime();
+      setInterval(setCurrentTime, 1000);
+
+      // 저장 버튼 클릭 이벤트 설정
+      const saveButton = document.getElementById('saveButton');
+      saveButton.addEventListener('click', saveData);
+    }
+
+    // 페이지 로드 시 initializePage 함수 실행
+    window.onload = initializePage;
+  </script>
+</body>
+</html>
+
