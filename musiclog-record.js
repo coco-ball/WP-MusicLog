@@ -85,7 +85,7 @@ function saveData() {
   const currentTime = document.getElementById('current-time').textContent;
   const memo = document.getElementById('memo-textarea').value;
 
-  // 여기서 데이터를 데이터베이스에 저장하는 로직을 추가하세요.
+  // 여기서 데이터를 데이터베이스에 저장하는 로직을 추가-firebase?
   // 데이터베이스에 저장되는 데이터는 albumCover, songInfo, address, currentTime, memo 입니다.
 
   // 저장이 완료되면 사용자에게 알림 등의 피드백을 제공할 수 있습니다.

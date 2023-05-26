@@ -14,8 +14,9 @@ const PostLog = () => {
     artist: "SZA",
     text: "text-input",
   };
+
 //엘범 커버 사진은 데이터에 포함하지 않나요? 
-//spotify API연동
+//spotify API연동-->userid, 노래 title, artist, album cover.. 불러오기 --> 
 
   return (
     <div className="w-screen px-64 flex-col justify-center">
@@ -38,7 +39,7 @@ const PostLog = () => {
           <p className="text-2xl font-bold mb-1">시간</p>
           <p className="mb-4">{exData.datetime}</p>
           <label htmlFor="input-text" className="text-2xl font-bold">
-            지금 뭐하고 계시나요? 간단한 메모를 남겨주세요.
+            지금 무엇을 하고 있나요? 간단한 메모를 남겨주세요.
           </label>
           <textarea
             id="input-text"
@@ -69,8 +70,8 @@ function saveData() {
   const artist = document.getElementById(' ').textContent;
   const text = document.getElementById('text-input').value;
 
-// 여기서 데이터를 데이터베이스에 저장하는 로직을 추가
-// 데이터베이스에 저장되는 데이터는 albumCover, songInfo, address, currentTime, memo 
+// 여기서 데이터를 데이터베이스에 저장하는 로직을 추가-firebase 연동?
+// 데이터베이스에 저장되는 데이터는 userid, location, datetime, title, artist, text.. *앨범커버도 저장해야?
 
   alert('오늘의 음악 로그가 저장되었습니다.');
 }
