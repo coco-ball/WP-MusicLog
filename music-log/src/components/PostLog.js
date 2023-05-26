@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const PostLog = () => {
   const [input, setInput] = useState("");
@@ -43,7 +43,7 @@ const PostLog = () => {
             type="text"
             className="w-full h-48 p-1 mt-2 rounded bg-gray-200 focus:outline-none focus:bg-gray-300"
             value={input}
-            onChange={(e) => setInput(e.target.value)}
+            onChange={(e) => useEffect(() => setInput(e.target.value))}
           ></textarea>
         </div>
       </body>
