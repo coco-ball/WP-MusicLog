@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-//import MusicLog from "@/src/components/MusicLog"; 
+
 
 // firebase 관련 모듈을 불러옵니다.
-/*
 import { db } from "@/firebase";
 import {
   collection,
@@ -15,10 +14,10 @@ import {
   orderBy,
   where
 } from "firebase/firestore";
-*/
+
 
 // DB의 todos 컬렉션 참조를 만듭니다. 컬렉션 사용시 잘못된 컬렉션 이름 사용을 방지합니다.
-//const postlogCollection = collection(db, "postlogs");
+const postlogCollection = collection(db, "postlogs");
 
 
 const PostLog = () => {
@@ -33,12 +32,12 @@ const PostLog = () => {
     datetime: date + " " + time,
     title: "Kill Bill",
     artist: "SZA",
+    albumcover: "/albumCover.jpeg" //확인 필요
     text: "text-input",
   };
 
 // firebase 관련 명령
-//albumCover 엘범 커버 사진은 데이터에 포함하지 않나요? 
-//spotify API연동-->userid, 노래 title, artist, album cover.. 불러오기 --> 
+//spotify API연동-->userid, 노래 title, artist, album cover.. 총 7개 항목 불러오기 --> 
 
 
   return (
