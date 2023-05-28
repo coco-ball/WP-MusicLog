@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-
+import PostLog from "@/src/components/PostLog";
 
 const MusicLog = () => {
   const [logs, setLogs] = useState([]);
