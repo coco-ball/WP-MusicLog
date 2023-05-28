@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-//import MusicLog from "@/src/components/PostLoglist"; 
+//import MusicLog from "@/src/components/MusicLog"; 
 
 // firebase 관련 모듈을 불러옵니다.
 /*
@@ -100,3 +100,4 @@ function saveData() {
 // 저장하기 버튼에 이벤트 리스너 추가
 //const saveButton = document.getElementById('save-button');
 //saveButton.addEventListener('click', saveData);
+)
