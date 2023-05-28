@@ -1,9 +1,10 @@
 import PostLog from "@/src/components/PostLog";
+import MusicLog from "@/src/components/MusicLog";
 import React from "react";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 
-import MainPage from "@/src/components/MainPage";
+
 export default function Home() {
   // const router = useRouter();
   // const { data } = useSession({
@@ -15,7 +16,7 @@ export default function Home() {
 
   return (
     <div>
-      <MainPage />
+      <MusicLog/>
     </div>
   );
 }
