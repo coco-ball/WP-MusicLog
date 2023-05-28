@@ -99,4 +99,11 @@ function saveData() {
 // 저장하기 버튼에 이벤트 리스너 추가
 //const saveButton = document.getElementById('save-button');
 //saveButton.addEventListener('click', saveData);
-)
+
+
+
+
+//firebase: 모듈 불러오기->DB만들기
+
+//  ->새로 생성된 데이터 firebase DB에 집어넣어 저장(+alert)
+//  ->(MusicLog.js-사실상 정보 리스트/에서 firebase의 DB 하나하나 불러오기 .map)
