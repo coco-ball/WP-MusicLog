@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 
 const MusicLog = () => {
+  console.log("musiclog");
   const [logs, setLogs] = useState([]);
 
   useEffect(() => {
