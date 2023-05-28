@@ -20,37 +20,62 @@ import {
 // DB의 todos 컬렉션 참조를 만듭니다. 컬렉션 사용시 잘못된 컬렉션 이름 사용을 방지합니다.
 //const postlogCollection = collection(db, "postlogs");
 
-const PostLog = () => {
+export default function PostLog({ setStateVar }) {
+  const [logs, setLogs] = useState([]);
   const [input, setInput] = useState("");
 
-  const date = new Date().toISOString().substring(0, 10);
-  const time = new Date().toISOString().substring(12, 19);
+  const userId = "cocoball";
+  const location = "서울대학교 83동";
+  const albumCover = "albumCover.jpeg";
+  const title = "Kill Bill";
+  const artist = "SZA";
 
-  const exData = {
-    userId: "cocoball",
-    location: "서울대학교 83동",
-    datetime: date + " " + time,
-    title: "Kill Bill",
-    artist: "SZA",
-    text: "text-input",
+  const saveLog = () => {
+    if (input.trim() === "") return;
+
+    const date = new Date().toISOString().substring(0, 10);
+    const time = new Date().toISOString().substring(12, 19);
+    setLogs([
+      ...logs,
+      {
+        id: Date.now(),
+        userId: userId,
+        location: location,
+        datetime: date + " " + time,
+        cover: albumCover,
+        title: title,
+        artist: artist,
+        text: input,
+      },
+    ]);
+    setInput("");
+    setStateVar("LIST");
   };
+  // const exData = {
+  //   userId: "cocoball",
+  //   location: "서울대학교 83동",
+  //   datetime: datetime,
+  //   title: "Kill Bill",
+  //   artist: "SZA",
+  //   text: "text-input",
+  // };
 
   // firebase 관련 명령
   //albumCover 엘범 커버 사진은 데이터에 포함하지 않나요?
   //spotify API연동-->userid, 노래 title, artist, album cover.. 불러오기 -->
-
+  useEffect(() => {
+    console.log(logs);
+  }, [logs]);
   return (
     <body className="w-auto flex mt-8">
       <div className="w-72 mr-4 bg-white rounded p-4">
-        <img className="w-auto mb-4 rounded" src="/albumCover.jpeg"></img>
-        <p className="text-center text-3xl mb-1">{exData.title}</p>
-        <p className="text-center text-2xl">{exData.artist}</p>
+        <img className="w-auto mb-4 rounded" src={albumCover}></img>
+        <p className="text-center text-3xl mb-1">{title}</p>
+        <p className="text-center text-2xl">{artist}</p>
       </div>
       <div className="w-full bg-white rounded p-4">
         <p className="text-2xl font-bold mb-1">지금 어디에 계시나요?</p>
-        <p className="mb-4">{exData.location}</p>
-        <p className="text-2xl font-bold mb-1">시간</p>
-        <p className="mb-4">{exData.datetime}</p>
+        <p className="mb-4">{location}</p>
         <label htmlFor="input-text" className="text-2xl font-bold">
           지금 뭐하고 계시나요? 간단한 메모를 남겨주세요.
         </label>
@@ -59,20 +84,18 @@ const PostLog = () => {
           type="text"
           className="w-full h-48 p-1 mt-2 rounded bg-gray-200 focus:outline-none focus:bg-gray-300"
           value={input}
-          onChange={(e) => useEffect(() => setInput(e.target.value))}
+          onChange={(e) => setInput(e.target.value)}
         ></textarea>
         <button
-          className={`w-30 justify-self-center px-5 py-2 ml-auto text-3xl rounded bg-gray-300 hover:bg-gray-400`}
-          // onClick={() => toggleStateVar()}
+          className={`float-right p-2 ml-auto rounded bg-gray-300 hover:bg-gray-400`}
+          onClick={() => saveLog()}
         >
           작성 완료
         </button>
       </div>
     </body>
   );
-};
-
-export default PostLog;
+}
 
 //데이터 저장하는 함수 지정한 후 맨 마지막에 alert('오늘의 음악 로그가 저장되었습니다.'); 코드 추가해서 사용자가 자신의 코드가 저장됨을 알게 하면 좋을 것 같아요
 // 저장하기 버튼 클릭 시 데이터 저장하는 함수
