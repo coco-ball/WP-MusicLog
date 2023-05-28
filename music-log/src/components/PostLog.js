@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 const PostLog = () => {
+  console.log("postlog");
   const [input, setInput] = useState("");
 
   const date = new Date().toISOString().substring(0, 10);
