@@ -115,3 +115,16 @@ function saveData() {
 
 //  ->새로 생성된 데이터 firebase DB에 집어넣어 저장(+alert)
 //  ->(MusicLog.js-사실상 정보 리스트/에서 firebase의 DB 하나하나 불러오기 .map)
+// 리턴에 <button classname={~~} onClick={() => saveButton()} > 요렇게 넣어주기
+
+// {data?.user?.name}'s 음악 로그
+/*
+  <ul>
+{todos.map((todo) => (
+  <TodoItem
+    key={todo.id}
+    todo={todo}
+    onToggle={() => toggleTodo(todo.id)}
+    onDelete={() => deleteTodo(todo.id)}
+  />
+  */
