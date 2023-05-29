@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react";
 
-// firebase 관련 모듈을 불러옵니다.
-// import { db } from "@/firebase";
-// import {
-//   collection,
-//   query,
-//   doc,
-//   getDocs,
-//   addDoc,
-//   updateDoc,
-//   deleteDoc,
-//   orderBy,
-//   where,
-// } from "firebase/firestore";
+//firebase 관련 모듈을 불러옵니다.
+ import { db } from "@/firebase";
+ import {
+   collection,
+   query,
+   doc,
+   getDocs,
+   addDoc,
+   updateDoc,
+   deleteDoc,
+   orderBy,
+   where,
+ } from "firebase/firestore";
 
 // DB의 todos 컬렉션 참조를 만듭니다. 컬렉션 사용시 잘못된 컬렉션 이름 사용을 방지합니다.
-// const postlogCollection = collection(db, "postlogs");
+ const postlogCollection = collection(db, "postlogs");
 
 export default function PostLog({ setStateVar }) {
   const [logs, setLogs] = useState([]);
