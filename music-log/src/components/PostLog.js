@@ -53,9 +53,6 @@ export default function PostLog({ setStateVar }) {
     console.log(logs);
   }, [logs]);
 
-  // firebase 관련 명령
-  //spotify API연동-->userid, 노래 title, artist, album cover.. 총 7개 항목 불러오기 -->
-
   return (
     <body className="w-auto flex mt-8">
       <div className="w-72 mr-4 bg-white rounded p-4">
