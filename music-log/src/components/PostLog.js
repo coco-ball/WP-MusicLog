@@ -1,21 +1,23 @@
+
 import React, { useState, useEffect } from "react";
 
 //firebase 관련 모듈을 불러옵니다.
 import { db } from "./firebase";
 import {
-  collection,
-  query,
-  doc,
-  getDocs,
-  addDoc,
-  updateDoc,
-  deleteDoc,
-  orderBy,
-  //where,
+ collection,
+ query,
+ doc,
+ getDocs,
+ addDoc,
+ updateDoc,
+ deleteDoc,
+ orderBy,
+ //where,
 } from "firebase/firestore";
 
 // DB의 todos 컬렉션 참조를 만듭니다. 컬렉션 사용시 잘못된 컬렉션 이름 사용을 방지합니다.
 const postlogCollection = collection(db, "postlogs");
+
 
 export default function PostLog({ setStateVar }) {
   const [logs, setLogs] = useState([]);
@@ -27,6 +29,7 @@ export default function PostLog({ setStateVar }) {
   const title = "Kill Bill";
   const artist = "SZA";
 
+
   const getpostlogs = async () => {
     // Firestore 쿼리를 만듭니다.
     const q = query(postlogCollection);
@@ -35,11 +38,15 @@ export default function PostLog({ setStateVar }) {
     const results = await getDocs(q);
     const newpostlogs = [];
 
+
+
     // 가져온 할 일 목록을 newTodos 배열에 담습니다.
     results.docs.forEach((doc) => {
       // console.log(doc.data());
       // id 값을 Firestore 에 저장한 값으로 지정하고, 나머지 데이터를 newTodos 배열에 담습니다.
       newpostlogs.push({ id: doc.id, ...doc.data() });
+
+
     });
 
     setLogs(newpostlogs); //todos 배열 업데이트
@@ -55,7 +62,7 @@ export default function PostLog({ setStateVar }) {
     const date = new Date().toISOString().substring(0, 10);
     const time = new Date().toISOString().substring(12, 19);
 
-    const docRef = await addDoc(postlogCollection, {
+    const docRef =  await addDoc(postlogCollection, {
       userId: userId,
       id: Date.now(),
       location: location,
@@ -65,10 +72,10 @@ export default function PostLog({ setStateVar }) {
       artist: artist,
       text: input,
     });
-    alert("오늘의 음악 로그가 저장되었습니다.");
+    alert('오늘의 음악 로그가 저장되었습니다.');
 
-    setLogs([
-      ...logs,
+
+    setLogs([...logs,
       {
         id: docRef.id,
         userId: userId,
@@ -84,9 +91,9 @@ export default function PostLog({ setStateVar }) {
     setStateVar(1);
   };
 
-  //  useEffect(() => {
-  //    console.log(logs);
-  //  }, [logs]);
+//  useEffect(() => {
+//    console.log(logs);
+//  }, [logs]);
 
   // firebase 관련 명령
   //spotify API연동-->userid, 노래 title, artist, album cover.. 총 7개 항목 불러오기 -->
@@ -146,11 +153,18 @@ function saveData() {
 //const saveButton = document.getElementById('save-button');
 //saveButton.addEventListener('click', saveData);
 
+
+
 //firebase: 모듈 불러오기->DB만들기
 
 //  ->새로 생성된 데이터 firebase DB에 집어넣어 저장(+alert)
 //  ->(MusicLog.js-사실상 정보 리스트/에서 firebase의 DB 하나하나 불러오기 .map)
 // 리턴에 <button classname={~~} onClick={() => saveButton()} > 요렇게 넣어주기 // savelog
+
+
+
+
+
 
 // {data?.user?.name}'s 음악 로그
 /*
