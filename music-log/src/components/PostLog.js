@@ -14,6 +14,7 @@ import {
  orderBy,
  //where,
 } from "firebase/firestore";
+import { getPlaybackState } from "@/pages/lib/Spotify";
 
 // DB의 todos 컬렉션 참조를 만듭니다. 컬렉션 사용시 잘못된 컬렉션 이름 사용을 방지합니다.
 const postlogCollection = collection(db, "postlogs");
@@ -22,6 +23,8 @@ const postlogCollection = collection(db, "postlogs");
 export default function PostLog({ setStateVar }) {
   const [logs, setLogs] = useState([]);
   const [input, setInput] = useState("");
+  const [list, setList] = useState([]);
+  const [isPlaying, setIsPlaying] = useState([0]);
 
   const userId = "cocoball";
   const location = "서울대학교 83동";
@@ -29,6 +32,18 @@ export default function PostLog({ setStateVar }) {
   const title = "Kill Bill";
   const artist = "SZA";
 
+  const getMyPlayState = async () => {
+    const res = await fetch('/api/playState');
+    const {items} = await res.json();
+    console.log("from here", items);
+    setIsPlaying(items);
+  };
+
+  const getMyPlaylists = async () => {
+    const res = await fetch('/api/playlists');
+    const {items} = await res.json();
+    setList(items);
+  };
 
   const getpostlogs = async () => {
     // Firestore 쿼리를 만듭니다.
@@ -37,8 +52,6 @@ export default function PostLog({ setStateVar }) {
     // Firestore 에서 할 일 목록을 조회합니다.
     const results = await getDocs(q);
     const newpostlogs = [];
-
-
 
     // 가져온 할 일 목록을 newTodos 배열에 담습니다.
     results.docs.forEach((doc) => {
@@ -110,6 +123,17 @@ export default function PostLog({ setStateVar }) {
         <p className="mb-4">{location}</p>
         {/* <p className="text-2xl font-bold mb-1">시간</p>
           <p className="mb-4">{datetime}</p> */}
+
+        <button onClick={() => getMyPlaylists()}>Get all my playlists</button>
+        {list.map((item) => (
+          <div key={item.id}>
+            <h1>{item.name}</h1>
+            <img src={item.images[0]?.url} width="100" />
+          </div>
+        ))}
+
+        <button onClick={() => getMyPlayState()}>test</button>
+
         <label htmlFor="input-text" className="text-2xl font-bold">
           지금 뭐하고 계시나요? 간단한 메모를 남겨주세요.
         </label>

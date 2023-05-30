@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSession} from "next-auth/react";
+import { useSession, signOut} from "next-auth/react";
 
 import PostLog from "./PostLog.js";
 import MusicLog from "./MusicLog.js";
@@ -40,6 +40,19 @@ const MainPage = () => {
     // </div>
 
     <div className="w-screen px-64 flex-col justify-center">
+      <div>
+        <button
+            className={`w-40
+                      justify-self-center
+                      p-1 mb-4
+                    text-rose-500
+                      border border-rose-500 rounded
+                    hover:bg-white hover:text-rose-500`}
+            onClick={() => signOut()}
+          >
+            Sign out
+          </button>
+      </div>
       <div className="flex mt-20">
         <img
           src={stateVar === "WRITE" ? "/write.svg" : "album.svg"}

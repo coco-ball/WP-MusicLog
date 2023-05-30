@@ -9,7 +9,7 @@ export default function Signin() {
     <div className="flex justify-center h-screen">
       {session ? (
         <div className="grid m-auto text-center">
-          <div className="m-4">Signed in as {session.user.name}</div>
+          <div className="m-4">{session.session.user.name}으로 로그인하셨습니다.</div>
           <button
             className={`w-40
                       justify-self-center
