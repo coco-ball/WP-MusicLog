@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSession} from "next-auth/react";
 
 import PostLog from "./PostLog.js";
 import MusicLog from "./MusicLog.js";
@@ -8,8 +9,10 @@ const MainPage = () => {
 
   function toggleStateVar() {
     setStateVar((prevState) => (prevState === "WRITE" ? "LIST" : "WRITE"));
-    console.log(1);
   }
+
+  //세션 사용 위해
+  const { data: session } = useSession();
 
   return (
     // <div className = "container">
@@ -44,7 +47,7 @@ const MainPage = () => {
           className="mr-4"
         ></img>
         <h1 className="text-5xl font-bold">
-          {stateVar === "WRITE" ? "음악 로그 작성" : "00님의 음악로그"}
+          {stateVar === "WRITE" ? "음악 로그 작성" : `${session.user.name}님의 음악로그`}
         </h1>
         <button
           className={`w-30 px-5 py-2 ml-auto text-3xl rounded bg-gray-300 hover:bg-gray-400`}
