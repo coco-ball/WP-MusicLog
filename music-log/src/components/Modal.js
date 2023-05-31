@@ -14,7 +14,7 @@ const Modal = ({ isOpen, closeModal, setState }) => {
       <div className="bg-white rounded p-8">
         <p className="text-xl font-bold mb-2">
           {session
-            ? `${session.user.name}님, 지금 00의 000을 듣고 있네요!`
+            ? `${session.session.user.name}님, 지금 00의 000을 듣고 있네요!`
             : "00님, 지금 00의 000을 듣고 있네요!"}
         </p>
         <p className="text-l mb-4">지금의 순간을 간단하게 남겨주세요</p>
