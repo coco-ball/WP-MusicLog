@@ -14,6 +14,7 @@ import {
  orderBy,
  //where,
 } from "firebase/firestore";
+import { getPlaybackState } from "@/pages/lib/Spotify";
 
 // DB의 todos 컬렉션 참조를 만듭니다. 컬렉션 사용시 잘못된 컬렉션 이름 사용을 방지합니다.
 const postlogCollection = collection(db, "postlogs");
@@ -22,12 +23,44 @@ const postlogCollection = collection(db, "postlogs");
 export default function PostLog({ setStateVar }) {
   const [logs, setLogs] = useState([]);
   const [input, setInput] = useState("");
+  const [list, setList] = useState([]);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [SongTitle, setSongTitle] = useState("Track");
+  const [SongArtist, setSongArtist] = useState("Artist");
+  const [ImageUrl, setImageUrl] = useState('https://cdn-icons-png.flaticon.com/512/659/659056.png');
 
   const userId = "cocoball";
   const location = "서울대학교 83동";
-  const albumCover = "albumCover.jpeg";
-  const title = "Kill Bill";
-  const artist = "SZA";
+ //const albumCover = "albumCover.jpeg";
+  //const title = "Kill Bill";
+  //const artist = "SZA";
+
+  const getMyPlayState = async () => {
+    const res = await fetch('/api/playState');
+    console.log("Activated");
+    if (res.status != 200) {
+      //정상적 응답일 아닐 경우 isPlaying을 처음의 false로 냅둠
+    } else {
+      //정상적 응답일 경우 is_playing값을 isPlaying에 할당
+      const {is_playing, item} = await res.json();
+      console.log("degub", item);
+      setIsPlaying(is_playing);
+      if (is_playing) { //노래 제목, 아티스트, 사진 업데이트
+        setSongTitle(item.name);
+        setSongArtist(item.artists[0].name);
+        setImageUrl(item.album.images[0].url);
+      }
+    }
+  };
+  //컴포넌트가 렌더링될때 getMyPlayState를 자동으로 실행하기 위한 함수
+  useEffect(() => {getMyPlayState()},[]);
+
+
+  const getMyPlaylists = async () => {
+    const res = await fetch('/api/playlists');
+    const {items} = await res.json();
+    setList(items);
+  };
 
 
   const getpostlogs = async () => {
@@ -37,8 +70,6 @@ export default function PostLog({ setStateVar }) {
     // Firestore 에서 할 일 목록을 조회합니다.
     const results = await getDocs(q);
     const newpostlogs = [];
-
-
 
     // 가져온 할 일 목록을 newTodos 배열에 담습니다.
     results.docs.forEach((doc) => {
@@ -101,15 +132,16 @@ export default function PostLog({ setStateVar }) {
   return (
     <body className="w-auto flex mt-8">
       <div className="w-72 mr-4 bg-white rounded p-4">
-        <img className="w-auto mb-4 rounded" src={albumCover}></img>
-        <p className="text-center text-3xl mb-1">{title}</p>
-        <p className="text-center text-2xl">{artist}</p>
+        <img className="w-auto mb-4 rounded" src={ImageUrl}></img>
+        <p className="text-center text-3xl mb-1">{SongTitle}</p>
+        <p className="text-center text-2xl">{SongArtist}</p>
       </div>
       <div className="w-full bg-white rounded p-4">
         <p className="text-2xl font-bold mb-1">지금 어디에 계시나요?</p>
         <p className="mb-4">{location}</p>
         {/* <p className="text-2xl font-bold mb-1">시간</p>
           <p className="mb-4">{datetime}</p> */}
+
         <label htmlFor="input-text" className="text-2xl font-bold">
           지금 뭐하고 계시나요? 간단한 메모를 남겨주세요.
         </label>
