@@ -40,28 +40,6 @@ const MusicLog = () => {
 
   useEffect(() => {
     getLogs();
-
-    //simulating 내용은 주석처리 하였습니다.
-    // Simulating fetching logs from an API or storage
-    // const fetchedLogs = [
-    //   {
-    //     title: "첫 번째 기록",
-    //     location: "서울",
-    //     artist: "아티스트 1",
-    //     datetime: "2023-05-27 10:00",
-    //     text: "첫 번째 기록입니다.",
-    //   },
-    //   {
-    //     title: "두 번째 기록",
-    //     location: "부산",
-    //     artist: "아티스트 2",
-    //     datetime: "2023-05-28 15:30",
-    //     text: "두 번째 기록입니다.",
-    //   },
-    //   // Add more logs if needed
-    // ];
-
-    // setLogs(fetchedLogs);
   }, []);
 
   return (
@@ -71,11 +49,11 @@ const MusicLog = () => {
           <div className="w-72 mr-4 bg-white rounded p-4">
             <img
               className="w-auto mb-4 rounded"
-              src="/albumCover.jpeg"
+              src={log.cover}
               alt="앨범 커버"
             ></img>
-            <p className="text-center text-3xl mb-1">{log.title}</p>
-            <p className="text-center text-2xl">{log.artist}</p>
+            <p className="text-center font-bold text-2xl mb-1">{log.title}</p>
+            <p className="text-center ">{log.artist}</p>
           </div>
           <div className="w-full bg-white rounded p-4">
             <p className="text-2xl font-bold mb-1">지금 어디에 계시나요?</p>

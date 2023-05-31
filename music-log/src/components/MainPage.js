@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
+
 import Modal from "./Modal";
 import Header from "./Header";
 import Player from "./Player";
-
 import PostLog from "./PostLog.js";
 import MusicLog from "./MusicLog.js";
+
+import { getPlaybackState } from "@/pages/lib/Spotify";
+import { data } from "autoprefixer";
 
 const MainPage = () => {
   const [stateVar, setStateVar] = useState("WRITE");
@@ -26,13 +29,72 @@ const MainPage = () => {
   };
   //modalOpen은 모달의 열림 여부- 초기값 false/ setModalOpen 함수는 모달의 열림 여부를 업데이트
   const [modalOpen, setModalOpen] = useState(false);
+  const [list, setList] = useState([]);
+  const [userId, setUserId] = useState([]);
+  const [userName, setUserName] = useState([]);
+  const [userImg, setUserImg] = useState([]);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [songTitle, setSongTitle] = useState("Track");
+  const [songArtist, setSongArtist] = useState("Artist");
+  const [imageUrl, setImageUrl] = useState(
+    "https://cdn-icons-png.flaticon.com/512/659/659056.png"
+  );
+
+  const location = "서울대학교 83동";
+
+  const getMyPlayState = async () => {
+    const res = await fetch("/api/playState");
+    console.log("Activated");
+    if (res.status != 200) {
+      //정상적 응답일 아닐 경우 isPlaying을 처음의 false로 냅둠
+    } else {
+      //정상적 응답일 경우 is_playing값을 isPlaying에 할당
+      const { is_playing, item } = await res.json();
+      console.log("degub", item);
+      setIsPlaying(is_playing);
+      if (is_playing) {
+        //노래 제목, 아티스트, 사진 업데이트
+        setSongTitle(item.name);
+        setSongArtist(item.artists[0].name);
+        setImageUrl(item.album.images[0].url);
+      }
+    }
+  };
+  //컴포넌트가 렌더링될때 getMyPlayState를 자동으로 실행하기 위한 함수
+  useEffect(() => {
+    getMyPlayState();
+  }, []);
+
+  const getMyPlaylists = async () => {
+    const res = await fetch("/api/playlists");
+    const { items } = await res.json();
+    setList(items);
+  };
+
+  const getUserProfile = async () => {
+    const res = await fetch("/api/currentUser");
+    if (res.status != 200) {
+      //정상적 응답일 아닐 경우 isPlaying을 처음의 false로 냅둠
+    } else {
+      const { id, images, display_name } = await res.json();
+      console.log("debug_id", id);
+      console.log("debug", images);
+      console.log("debug", display_name);
+      setUserId(id);
+      setUserName(display_name);
+      setUserImg(images.url);
+    }
+  };
+
+  useEffect(() => {
+    getUserProfile();
+  }, []);
 
   return (
     <>
-      <Header username={session.session.user.name}></Header>
-
+      <Header username={userName} userImg={userImg}></Header>
       <div className="w-screen px-64 flex-col justify-center">
-        <div className="flex mt-20">
+        <div className="flex mt-12 mb-8">
           <img
             src={stateVar === "WRITE" ? "/write.svg" : "album.svg"}
             alt=""
@@ -42,8 +104,8 @@ const MainPage = () => {
             {stateVar === "WRITE"
               ? "음악 로그 작성"
               : stateVar === "LIST"
-              ? `${session.session.user.name}님의 음악로그`
-              : `${session.session.user.name}님의 플레이어`}
+              ? `${userName}님의 음악로그`
+              : `${userName}님의 플레이어`}
           </h1>
           <button
             className={`w-30 px-5 py-2 ml-auto text-3xl rounded bg-gray-300 hover:bg-gray-400`}
@@ -57,13 +119,13 @@ const MainPage = () => {
           </button>
 
           <button
-            className="fixed top-20 right-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+            className="fixed bottom-40 right-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
             onClick={openModal}
           >
             모달 열기
           </button>
           <button
-            className="fixed top-30 right-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+            className="fixed bottom-20 right-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
             onClick={() => toggleStateVar("PLAYER")}
           >
             플레이어
@@ -84,7 +146,15 @@ const MainPage = () => {
             <Player></Player>
           ) : stateVar === "WRITE" ? (
             <div className="write">
-              <PostLog setStateVar={setStateVar}></PostLog>
+              <PostLog
+                setStateVar={setStateVar}
+                isPlaying={isPlaying}
+                songTitle={songTitle}
+                songArtist={songArtist}
+                imageUrl={imageUrl}
+                userId={userId}
+                location={location}
+              ></PostLog>
             </div>
           ) : (
             <div className="list">
@@ -96,5 +166,4 @@ const MainPage = () => {
     </>
   );
 };
-
 export default MainPage;

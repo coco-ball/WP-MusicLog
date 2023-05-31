@@ -1,6 +1,6 @@
-import { useSession, signOut } from "next-auth/react";
+import { signOut } from "next-auth/react";
 
-export default function Header({ username }) {
+export default function Header({ username, userImg }) {
   return (
     // <div className="bg-white m-">
     //   <button
@@ -11,9 +11,9 @@ export default function Header({ username }) {
     //     Logout
     //   </button>
     // </div>
-    <header className="w-full flex justify-end items-center gap-10 px-8 py-2 bg-white">
+    <header className=" w-full flex justify-end items-center gap-10 px-8 py-2 bg-white">
       <div className="flex items-center">
-        <div className="w-8 h-8 rounded-full bg-gray-200 mr-4"></div>
+        <img className="w-8 rounded-full mr-4" src={userImg}></img>
         <span className="font-bold">{username}</span>
       </div>
       <button
