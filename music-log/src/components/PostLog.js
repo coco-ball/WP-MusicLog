@@ -24,7 +24,7 @@ export default function PostLog({ setStateVar }) {
   const [logs, setLogs] = useState([]);
   const [input, setInput] = useState("");
   const [list, setList] = useState([]);
-  const [isPlaying, setIsPlaying] = useState([0]);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   const userId = "cocoball";
   const location = "서울대학교 83동";
@@ -34,9 +34,14 @@ export default function PostLog({ setStateVar }) {
 
   const getMyPlayState = async () => {
     const res = await fetch('/api/playState');
-    const {items} = await res.json();
-    console.log("from here", items);
-    setIsPlaying(items);
+    if (res.status == 204) {
+      
+    } else {
+      const {is_playing} = await res.json();
+      if (is_playing === true) {
+        setIsPlaying(prevIsPlaying => !prevIsPlaying);
+      }
+    }
   };
 
   const getMyPlaylists = async () => {

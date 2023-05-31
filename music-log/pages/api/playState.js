@@ -17,9 +17,8 @@ const handler = async (req, res) => {
         console.log("play state", result);
         return res.status(200).json(result);
     } catch (error) {
-        const result = {is_playing: false, item: null};
-        console.log("play state", result);
-        return res.status(204).json(result);
+        console.log("error play state");
+        return res.status(204).end();
     }
 };
 
