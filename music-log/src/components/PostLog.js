@@ -16,15 +16,7 @@ import {
 
 const postlogCollection = collection(db, "postlogs");
 
-export default function PostLog({
-  setStateVar,
-  isPlaying,
-  songTitle,
-  songArtist,
-  imageUrl,
-  userId,
-  location,
-}) {
+export default function PostLog({ setStateVar, postLogData }) {
   const [logs, setLogs] = useState([]);
   const [input, setInput] = useState("");
 
@@ -51,19 +43,19 @@ export default function PostLog({
   }, []);
 
   const saveLog = async () => {
-    if ((input.trim() === "") | !isPlaying) return;
+    if ((input.trim() === "") | !postLogData.isPlaying) return;
 
     const date = new Date().toISOString().substring(0, 10);
     const time = new Date().toISOString().substring(12, 19);
 
     const docRef = await addDoc(postlogCollection, {
-      userId: userId,
+      userId: postLogData.userId,
       id: Date.now(),
-      location: location,
+      location: postLogData.location,
       datetime: date + " " + time,
-      cover: imageUrl,
-      title: songTitle,
-      artist: songArtist,
+      cover: postLogData.imageUrl,
+      title: postLogData.songTitle,
+      artist: postLogData.songArtist,
       text: input,
     });
     alert("오늘의 음악 로그가 저장되었습니다.");
@@ -72,12 +64,12 @@ export default function PostLog({
       ...logs,
       {
         id: docRef.id,
-        userId: userId,
-        location: location,
+        userId: postLogData.userId,
+        location: postLogData.location,
         datetime: date + " " + time,
-        cover: imageUrl,
-        title: songTitle,
-        artist: songArtist,
+        cover: postLogData.imageUrl,
+        title: postLogData.songTitle,
+        artist: postLogData.songArtist,
         text: input,
       },
     ]);
@@ -96,13 +88,13 @@ export default function PostLog({
     <div>
       <body className="w-auto flex">
         <div className="w-72 mr-4 bg-white rounded p-4">
-          <img className="w-auto mb-4 rounded" src={imageUrl}></img>
-          <p className="text-center text-3xl mb-1">{songTitle}</p>
-          <p className="text-center text-2xl">{songArtist}</p>
+          <img className="w-auto mb-4 rounded" src={postLogData.imageUrl}></img>
+          <p className="text-center text-3xl mb-1">{postLogData.songTitle}</p>
+          <p className="text-center text-2xl">{postLogData.songArtist}</p>
         </div>
         <div className="w-full bg-white rounded p-4">
           <p className="text-2xl font-bold mb-1">지금 어디에 계시나요?</p>
-          <p className="mb-4">{location}</p>
+          <p className="mb-4">{postLogData.location}</p>
           {/* <p className="text-2xl font-bold mb-1">시간</p>
           <p className="mb-4">{datetime}</p> */}
 

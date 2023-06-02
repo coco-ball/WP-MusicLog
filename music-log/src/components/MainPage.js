@@ -11,11 +11,16 @@ import { getPlaybackState } from "@/pages/lib/Spotify";
 import { data } from "autoprefixer";
 
 const MainPage = () => {
+  //------------------------------------------------------
+  //메인 페이지 아래로 모드에 따라 대응되는 컴포넌트 렌더링
   const [stateVar, setStateVar] = useState("WRITE");
 
   function toggleStateVar(mode) {
     setStateVar(mode);
   }
+
+  //------------------------------------------------------
+  //모달
 
   //세션 사용 위해
   const { data: session } = useSession();
@@ -29,6 +34,10 @@ const MainPage = () => {
   };
   //modalOpen은 모달의 열림 여부- 초기값 false/ setModalOpen 함수는 모달의 열림 여부를 업데이트
   const [modalOpen, setModalOpen] = useState(false);
+
+  //-------------------------------------------------------
+  //api로 가져올 값들
+
   const [list, setList] = useState([]);
   const [userId, setUserId] = useState([]);
   const [userName, setUserName] = useState([]);
@@ -39,8 +48,11 @@ const MainPage = () => {
   const [imageUrl, setImageUrl] = useState(
     "https://cdn-icons-png.flaticon.com/512/659/659056.png"
   );
-
+  //장소는 아직
   const location = "서울대학교 83동";
+
+  //-------------------------------------------------------
+  //API로 값 기져오고 변수(state)에 저장
 
   const getMyPlayState = async () => {
     const res = await fetch("/api/playState");
@@ -89,6 +101,17 @@ const MainPage = () => {
   useEffect(() => {
     getUserProfile();
   }, []);
+
+  //------------------------------------------------------
+  //변수들을 postLog.js에 넘기기 위해 배열 생성(너무 많아서!)
+  const postLogData = {
+    isPlaying: isPlaying,
+    songTitle: songTitle,
+    songArtist: songArtist,
+    imageUrl: imageUrl,
+    userId: userId,
+    location: location,
+  };
 
   return (
     <>
@@ -148,12 +171,7 @@ const MainPage = () => {
             <div className="write">
               <PostLog
                 setStateVar={setStateVar}
-                isPlaying={isPlaying}
-                songTitle={songTitle}
-                songArtist={songArtist}
-                imageUrl={imageUrl}
-                userId={userId}
-                location={location}
+                postLogData={postLogData}
               ></PostLog>
             </div>
           ) : (
