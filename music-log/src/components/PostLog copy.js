@@ -90,14 +90,17 @@ export default function PostLog({ setStateVar }) {
   const saveLog = async () => {
     if (input.trim() === "") return;
 
-    const date = new Date().toISOString().substring(0, 10);
-    const time = new Date().toISOString().substring(12, 19);
+  const now = new Date();	
+  const date = String(now).substring(0, 16);;
+  const hour = String(now.getHours()).padStart(2,"0");
+  const minutes = String(now.getMinutes()).padStart(2,"0");
+  const second = String(now.getSeconds()).padStart(2,"0");
 
     const docRef =  await addDoc(postlogCollection, {
       userId: userId,
       id: Date.now(),
       location: location,
-      datetime: date + " " + time,
+      datetime: `${date} ${hour}:${minutes}:${second}`,
       cover: albumCover,
       title: title,
       artist: artist,

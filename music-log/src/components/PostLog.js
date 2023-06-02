@@ -56,15 +56,24 @@ export default function PostLog({ setStateVar, postLogData }) {
   const saveLog = async () => {
     if ((input.trim() === "") | !postLogData.isPlaying) return;
 
-    const date = new Date().toISOString().substring(0, 10);
-    const time = new Date().toISOString().substring(12, 19);
+    //const date = new Date().toISOString().substring(0, 10);
+    //const time = new Date().toISOString().substring(12, 19);
+    //const hours = (parseInt(time.substring(0, 2)) + 7).toString().padStart(2, "0");
+    //const modifiedTime = hours + ":"+time.substring(2);
 
+    const now = new Date();	
+    const date = String(now).substring(0, 16);;
+    const hour = String(now.getHours()).padStart(2,"0");
+    const minutes = String(now.getMinutes()).padStart(2,"0");
+    const second = String(now.getSeconds()).padStart(2,"0");//number이기 때문에 padStart 붙일 수 없음. String 변환해주어야한다.
+ 
     const docRef = await addDoc(postlogCollection, {
       userId: postLogData.userId,
       userName: postLogData.userName,
       id: Date.now(),
       location: postLogData.location,
-      datetime: date + " " + time,
+      //datetime: date + " " + modifiedTime,
+      datetime: `${date} ${hour}:${minutes}:${second}`,
       cover: postLogData.imageUrl,
       title: postLogData.songTitle,
       artist: postLogData.songArtist,
@@ -79,7 +88,8 @@ export default function PostLog({ setStateVar, postLogData }) {
         userId: postLogData.userId,
         userName: postLogData.userName,
         location: postLogData.location,
-        datetime: date + " " + time,
+        //datetime: date + " " + time,
+        datetime: `${date} ${hour}:${minutes}:${second}`,
         cover: postLogData.imageUrl,
         title: postLogData.songTitle,
         artist: postLogData.songArtist,
