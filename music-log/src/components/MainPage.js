@@ -6,11 +6,12 @@ import Header from "./Header";
 import Player from "./Player";
 import PostLog from "./PostLog.js";
 import MusicLog from "./MusicLog.js";
+import WebPlayback from "./WebPlayback";
 
 import { getPlaybackState } from "@/pages/lib/Spotify";
 import { data } from "autoprefixer";
 
-const MainPage = () => {
+export const MainPage = () => {
   //------------------------------------------------------
   //메인 페이지 아래로 모드에 따라 대응되는 컴포넌트 렌더링
   const [stateVar, setStateVar] = useState("WRITE");
@@ -62,7 +63,7 @@ const MainPage = () => {
     } else {
       //정상적 응답일 경우 is_playing값을 isPlaying에 할당
       const { is_playing, item } = await res.json();
-      console.log("degub", item);
+      // console.log("degub", item);
       setIsPlaying(is_playing);
       if (is_playing) {
         //노래 제목, 아티스트, 사진 업데이트
@@ -88,9 +89,9 @@ const MainPage = () => {
     if (res.status != 200) {
     } else {
       const { id, images, display_name } = await res.json();
-      console.log("debug_id", id);
-      console.log("debug_name", display_name);
-      console.log("debug_images", images);
+      // console.log("debug_id", id);
+      // console.log("debug_name", display_name);
+      // console.log("debug_images", images);
       setUserId(id);
       setUserName(display_name);
       if (typeof images[0] != "undefined") {
@@ -168,7 +169,7 @@ const MainPage = () => {
         </div>
         <div className="contents">
           {stateVar === "PLAYER" ? (
-            <Player></Player>
+            <WebPlayback></WebPlayback>
           ) : stateVar === "WRITE" ? (
             <div className="write">
               <PostLog

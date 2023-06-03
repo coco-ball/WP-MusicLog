@@ -1,8 +1,9 @@
 import { useState } from "react";
 
-export default function Player() {
+export default function Player({ onPlay, track, position, player }) {
   const [playing, setPlaying] = useState("PLAY");
   function togglePlaying() {
+    onPlay(track.uri);
     setPlaying((prevState) => (prevState === "PLAY" ? "PAUSE" : "PLAY"));
   }
 
