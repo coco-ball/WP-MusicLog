@@ -90,7 +90,6 @@ export default function PostLog({ setStateVar, postLogData }) {
     setStateVar("LIST");
   };
 
-  console.log(session?.session.user.name);
   // console.log(logs);
   // useEffect(() => {
   //   console.log(logs);
