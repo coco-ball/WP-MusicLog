@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 
 //firebase 관련 모듈을 불러옵니다.
 import { db } from "./firebase";
 import {
   collection,
   query,
+  where,
   doc,
   getDocs,
   addDoc,
@@ -13,16 +15,25 @@ import {
   orderBy,
   //where,
 } from "firebase/firestore";
+import { data } from "autoprefixer";
 
 const postlogCollection = collection(db, "postlogs");
 
 export default function PostLog({ setStateVar, postLogData }) {
+  const { data: session } = useSession();
   const [logs, setLogs] = useState([]);
   const [input, setInput] = useState("");
 
   const getpostlogs = async () => {
     // Firestore 쿼리를 만듭니다.
-    const q = query(postlogCollection);
+    // const q = query(postlogCollection);
+
+    if (!session?.session?.user?.name) return;
+    const q = query(
+      postlogCollection,
+      where("userName", "==", session.session.user.name),
+      orderBy("datetime", "asc")
+    );
 
     // Firestore 에서 할 일 목록을 조회합니다.
     const results = await getDocs(q);
@@ -40,7 +51,7 @@ export default function PostLog({ setStateVar, postLogData }) {
 
   useEffect(() => {
     getpostlogs();
-  }, []);
+  }, [session]);
 
   const saveLog = async () => {
     if ((input.trim() === "") | !postLogData.isPlaying) return;
@@ -50,6 +61,7 @@ export default function PostLog({ setStateVar, postLogData }) {
 
     const docRef = await addDoc(postlogCollection, {
       userId: postLogData.userId,
+      userName: postLogData.userName,
       id: Date.now(),
       location: postLogData.location,
       datetime: date + " " + time,
@@ -65,6 +77,7 @@ export default function PostLog({ setStateVar, postLogData }) {
       {
         id: docRef.id,
         userId: postLogData.userId,
+        userName: postLogData.userName,
         location: postLogData.location,
         datetime: date + " " + time,
         cover: postLogData.imageUrl,
@@ -77,6 +90,8 @@ export default function PostLog({ setStateVar, postLogData }) {
     setStateVar("LIST");
   };
 
+  console.log(session?.session.user.name);
+  // console.log(logs);
   // useEffect(() => {
   //   console.log(logs);
   // }, [logs]);
