@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import PostLog from "@/src/components/PostLog";
+import { useSession } from "next-auth/react";
+// import PostLog from "@/src/components/PostLog";
 
 //firebase 관련 모듈을 불러옵니다.
 import { db } from "./firebase";
@@ -19,11 +20,17 @@ import {
 const postlogCollection = collection(db, "postlogs");
 
 const MusicLog = () => {
+  const { data: session } = useSession();
   const [logs, setLogs] = useState([]);
 
   // Firebase에서 불러오는 함수
   const getLogs = async () => {
-    const q = query(postlogCollection);
+    if (!session?.session?.user?.name) return;
+    const q = query(
+      postlogCollection,
+      where("userName", "==", session.session.user.name),
+      orderBy("datetime", "asc")
+    );
 
     // Firestore에서 불러오기
     const results = await getDocs(q);
@@ -40,7 +47,7 @@ const MusicLog = () => {
 
   useEffect(() => {
     getLogs();
-  }, []);
+  }, [session]);
 
   return (
     <div className="w-auto mt-8">

@@ -9,7 +9,7 @@ const firebaseConfig = {
   storageBucket: "musiclog-8ac3e.appspot.com",
   messagingSenderId: "532635667537",
   appId: "1:532635667537:web:3b868b67b22bfb93253c70",
-  measurementId: "G-VD0VCTVLZG",
+  measurementId: "G-VD0VCTVLZG"
 };
 
 const app = initializeApp(firebaseConfig);

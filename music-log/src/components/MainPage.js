@@ -86,7 +86,6 @@ const MainPage = () => {
   const getUserProfile = async () => {
     const res = await fetch("/api/currentUser");
     if (res.status != 200) {
-      //정상적 응답일 아닐 경우 isPlaying을 처음의 false로 냅둠
     } else {
       const { id, images, display_name } = await res.json();
       console.log("debug_id", id);
@@ -100,7 +99,7 @@ const MainPage = () => {
 
   useEffect(() => {
     getUserProfile();
-  }, []);
+  }, [session]);
 
   //------------------------------------------------------
   //변수들을 postLog.js에 넘기기 위해 배열 생성(너무 많아서!)
@@ -110,6 +109,7 @@ const MainPage = () => {
     songArtist: songArtist,
     imageUrl: imageUrl,
     userId: userId,
+    userName: userName,
     location: location,
   };
 
