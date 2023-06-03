@@ -41,7 +41,7 @@ const MainPage = () => {
   const [list, setList] = useState([]);
   const [userId, setUserId] = useState([]);
   const [userName, setUserName] = useState([]);
-  const [userImg, setUserImg] = useState([]);
+  const [userImg, setUserImg] = useState(["/profile.svg"]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [songTitle, setSongTitle] = useState("Track");
   const [songArtist, setSongArtist] = useState("Artist");
@@ -89,11 +89,13 @@ const MainPage = () => {
     } else {
       const { id, images, display_name } = await res.json();
       console.log("debug_id", id);
-      console.log("debug", images);
-      console.log("debug", display_name);
+      console.log("debug_name", display_name);
+      console.log("debug_images", images);
       setUserId(id);
       setUserName(display_name);
-      setUserImg(images.url);
+      if (typeof images[0] != "undefined") {
+        setUserImg(images[0].url);
+      }
     }
   };
 
