@@ -29,7 +29,7 @@ const MainPage = () => {
 
   return (
     <>
-      <Header username={session.session.user.name}></Header>
+      <Header username={session.session.user.name} userImg={session.session.user.image}></Header>
 
       <div className="w-screen px-64 flex-col justify-center">
         <div className="flex mt-20">
