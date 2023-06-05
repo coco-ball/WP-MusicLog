@@ -93,7 +93,7 @@ const MainPage = () => {
       console.log("debug", display_name);
       setUserId(id);
       setUserName(display_name);
-      setUserImg(images.url);
+      setUserImg(images[0].url);
     }
   };
 
