@@ -6,6 +6,7 @@ import Header from "./Header";
 import Player from "./Player";
 import PostLog from "./PostLog.js";
 import MusicLog from "./MusicLog.js";
+import WebPlayback from "./WebPlayback";
 
 import { getPlaybackState } from "@/pages/lib/Spotify";
 import { data } from "autoprefixer";
@@ -41,7 +42,7 @@ const MainPage = () => {
   const [list, setList] = useState([]);
   const [userId, setUserId] = useState([]);
   const [userName, setUserName] = useState([]);
-  const [userImg, setUserImg] = useState([]);
+  const [userImg, setUserImg] = useState(["/profile.svg"]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [songTitle, setSongTitle] = useState("Track");
   const [songArtist, setSongArtist] = useState("Artist");
@@ -50,6 +51,11 @@ const MainPage = () => {
   );
   //장소는 아직
   const location = "서울대학교 83동";
+
+  const [uri, setUri] = useState("");
+  const [device_id, setId] = useState("");
+  const [is_paused, setPaused] = useState([true]);
+  const [progress_time, setProgress] = useState();
 
   //-------------------------------------------------------
   //API로 값 기져오고 변수(state)에 저장
@@ -61,14 +67,32 @@ const MainPage = () => {
       //정상적 응답일 아닐 경우 isPlaying을 처음의 false로 냅둠
     } else {
       //정상적 응답일 경우 is_playing값을 isPlaying에 할당
-      const { is_playing, item } = await res.json();
-      console.log("degub", item);
+      const { device, progress_ms, is_playing, item, actions } =
+        await res.json();
+      // console.log("degub", item);
+      // console.log("degub_ms", progress_ms);
       setIsPlaying(is_playing);
       if (is_playing) {
         //노래 제목, 아티스트, 사진 업데이트
         setSongTitle(item.name);
         setSongArtist(item.artists[0].name);
         setImageUrl(item.album.images[0].url);
+
+        setUri(item.album.uri);
+        setId(device.id);
+        setPaused(actions.pausing);
+
+        function msToTime(s) {
+          var ms = s % 1000;
+          s = (s - ms) / 1000;
+          var secs = s % 60;
+          s = (s - secs) / 60;
+          var mins = s % 60;
+          return mins + ":" + secs + "." + ms;
+        }
+        const time = msToTime(progress_ms);
+
+        setProgress(time);
       }
     }
   };
@@ -88,12 +112,14 @@ const MainPage = () => {
     if (res.status != 200) {
     } else {
       const { id, images, display_name } = await res.json();
-      console.log("debug_id", id);
-      console.log("debug", images);
-      console.log("debug", display_name);
+      // console.log("debug_id", id);
+      // console.log("debug", images);
+      // console.log("debug", display_name);
       setUserId(id);
       setUserName(display_name);
-      setUserImg(images.url);
+      if (typeof images[0] != "undefined") {
+        setUserImg(images[0].url);
+      }
     }
   };
 
@@ -112,6 +138,22 @@ const MainPage = () => {
     userName: userName,
     location: location,
   };
+
+  const playBackData = {
+    isPlaying: isPlaying,
+    songTitle: songTitle,
+    uri: uri,
+    songArtist: songArtist,
+    imageUrl: imageUrl,
+    userId: userId,
+    userName: userName,
+    device_id: device_id,
+    is_paused: is_paused,
+    progress_time: progress_time,
+  };
+
+  console.log("postLogData" + postLogData);
+  console.log("playBackData" + playBackData);
 
   return (
     <>
@@ -166,7 +208,7 @@ const MainPage = () => {
         </div>
         <div className="contents">
           {stateVar === "PLAYER" ? (
-            <Player></Player>
+            <WebPlayback playBackData={playBackData}></WebPlayback>
           ) : stateVar === "WRITE" ? (
             <div className="write">
               <PostLog

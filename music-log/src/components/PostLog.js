@@ -61,12 +61,12 @@ export default function PostLog({ setStateVar, postLogData }) {
     //const hours = (parseInt(time.substring(0, 2)) + 7).toString().padStart(2, "0");
     //const modifiedTime = hours + ":"+time.substring(2);
 
-    const now = new Date();	
-    const date = String(now).substring(0, 16);;
-    const hour = String(now.getHours()).padStart(2,"0");
-    const minutes = String(now.getMinutes()).padStart(2,"0");
-    const second = String(now.getSeconds()).padStart(2,"0");//number이기 때문에 padStart 붙일 수 없음. String 변환해주어야한다.
- 
+    const now = new Date();
+    const date = String(now).substring(0, 16);
+    const hour = String(now.getHours()).padStart(2, "0");
+    const minutes = String(now.getMinutes()).padStart(2, "0");
+    const second = String(now.getSeconds()).padStart(2, "0"); //number이기 때문에 padStart 붙일 수 없음. String 변환해주어야한다.
+
     const docRef = await addDoc(postlogCollection, {
       userId: postLogData.userId,
       userName: postLogData.userName,

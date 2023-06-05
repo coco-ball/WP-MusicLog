@@ -6,7 +6,51 @@ const PLAYLISTS_ENDPOINT = "https://api.spotify.com/v1/me/playlists";
 const PLAYBACKSTATE_ENDPOINT = "https://api.spotify.com/v1/me/player";
 const CURRENTUSER_ENDPOINT = "https://api.spotify.com/v1/me";
 
-const getAccessToken = async (refresh_token) => {
+const request = require("request"); // "Request" library
+
+const authOptions = {
+  url: "https://accounts.spotify.com/api/token",
+  headers: {
+    Authorization:
+      "Basic " +
+      new Buffer.from(client_id + ":" + client_secret).toString("base64"),
+  },
+  form: {
+    grant_type: "client_credentials",
+  },
+  json: true,
+};
+
+request.post(authOptions, function (error, response, body) {
+  if (!error && response.statusCode === 200) {
+    const token = body.access_token;
+    console.log("real token : " + token);
+  }
+});
+
+// export async function getAccessToken2(client_id, code) {
+//   const verifier = localStorage.getItem("verifier");
+
+//   const params = new URLSearchParams();
+//   params.append("client_id", client_id);
+//   params.append("grant_type", "authorization_code");
+//   params.append("code", code);
+//   params.append("redirect_uri", "http://localhost:3000/callback");
+//   params.append("code_verifier", verifier);
+
+//   const result = await fetch("https://accounts.spotify.com/api/token", {
+//     method: "POST",
+//     headers: { "Content-Type": "application/x-www-form-urlencoded" },
+//     body: params,
+//   });
+
+//   const { access_token } = await result.json();
+//   return access_token;
+// }
+
+// getAccessToken2(client_id);
+
+export const getAccessToken = async (refresh_token) => {
   const response = await fetch(TOKEN_ENDPOINT, {
     method: "POST",
     headers: {

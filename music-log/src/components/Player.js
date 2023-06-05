@@ -1,25 +1,53 @@
 import { useState } from "react";
+import { useSession } from "next-auth/react";
 
-export default function Player() {
-  const [playing, setPlaying] = useState("PLAY");
-  function togglePlaying() {
-    setPlaying((prevState) => (prevState === "PLAY" ? "PAUSE" : "PLAY"));
-  }
+export default function Player({
+  onPlay,
+  onPause,
+  is_paused,
+  playBackData,
+  current_track,
+}) {
+  const { data } = useSession();
+  // const { accessToken } = data;
+  // const token = { accessToken };
+  // console.log("token" + token);
 
   return (
     <body className="w-auto flex mt-8">
       <div className="flex-col justify-center w-72 mr-4 bg-white rounded p-4">
-        <img className="w-auto mb-4 rounded" src="/albumCover.jpeg"></img>
+        <img
+          className="w-auto mb-4 rounded"
+          src={current_track?.album.images[0]?.url}
+        ></img>
+        <h3>{current_track?.name}</h3>
+        <p>{current_track?.artists[0].name}</p>
         <div className="flex jusify-between">
           <img className="float-left" src="/playlist.svg" alt=""></img>
           <img src="/rewind.svg" alt=""></img>
-          <img
-            src={playing === "PLAY" ? "/pause.svg" : "play.svg"}
-            alt=""
-            onClick={() => {
-              togglePlaying();
-            }}
-          ></img>
+          {is_paused ? (
+            <button>
+              <div>
+                <img
+                  src="play.svg"
+                  onClick={() => {
+                    onPlay(current_track?.uri);
+                  }}
+                />
+              </div>
+            </button>
+          ) : (
+            <button>
+              <div>
+                <img
+                  src="/pause.svg"
+                  onClick={() => {
+                    onPause();
+                  }}
+                />
+              </div>
+            </button>
+          )}
           <img src="/forward.svg" alt=""></img>
           <img className="float-right" src="/album.svg" alt=""></img>
         </div>
