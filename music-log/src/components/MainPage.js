@@ -41,7 +41,7 @@ const MainPage = () => {
   const [list, setList] = useState([]);
   const [userId, setUserId] = useState([]);
   const [userName, setUserName] = useState([]);
-  const [userImg, setUserImg] = useState([]);
+  const [userImg, setUserImg] = useState(["/profile.svg"]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [songTitle, setSongTitle] = useState("Track");
   const [songArtist, setSongArtist] = useState("Artist");
