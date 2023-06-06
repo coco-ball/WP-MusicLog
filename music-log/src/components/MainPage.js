@@ -6,6 +6,7 @@ import Header from "./Header";
 import Player from "./Player";
 import PostLog from "./PostLog.js";
 import MusicLog from "./MusicLog.js";
+import WebPlayback from "./WebPlayback";
 
 import { getPlaybackState } from "@/pages/lib/Spotify";
 import { data } from "autoprefixer";
@@ -166,7 +167,8 @@ const MainPage = () => {
         </div>
         <div className="contents">
           {stateVar === "PLAYER" ? (
-            <Player></Player>
+            // <Player></Player>
+            <WebPlayback></WebPlayback>
           ) : stateVar === "WRITE" ? (
             <div className="write">
               <PostLog
