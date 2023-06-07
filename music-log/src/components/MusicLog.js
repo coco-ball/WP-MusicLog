@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 // import PostLog from "@/src/components/PostLog";
 
+
 //firebase 관련 모듈을 불러옵니다.
 import { db } from "./firebase";
 import {
@@ -19,7 +20,7 @@ import {
 // // DB의 postlogs 컬렉션 참조를 만듭니다. 컬렉션 사용시 잘못된 컬렉션 이름 사용을 방지합니다.
 const postlogCollection = collection(db, "postlogs");
 
-const MusicLog = () => {
+const MusicLog = ({onDelete}) => {
   const { data: session } = useSession();
   const [logs, setLogs] = useState([]);
 
@@ -63,6 +64,7 @@ const MusicLog = () => {
             <p className="text-center ">{log.artist}</p>
           </div>
           <div className="w-full bg-white rounded p-4">
+            <button onClick={onDelete} className={'w-20 text-Black font-serif hover:bg-white hover:text-cyan-700 text-xs'}>X</button>
             <p className="text-2xl font-bold mb-1">지금 어디에 계시나요?</p>
             <p className="mb-4">{log.location}</p>
             <p className="text-2xl font-bold mb-1">시간</p>
