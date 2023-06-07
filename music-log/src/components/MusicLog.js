@@ -29,7 +29,7 @@ const MusicLog = () => {
     const q = query(
       postlogCollection,
       where("userName", "==", session.session.user.name),
-      orderBy("datetime", "dsc")
+      orderBy("datetime", "desc")
     );
 
     // Firestore에서 불러오기
