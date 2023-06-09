@@ -24,6 +24,70 @@ export default function PostLog({ setStateVar, postLogData, updateTime }) {
   const [logs, setLogs] = useState([]);
   const [input, setInput] = useState("");
 
+  const [currentLocation, setCurrentLocation] = useState('');
+
+  const getLocation = async () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+          
+          try {
+            const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyDuljB_xu6sRdGsIx1MzW1wsaoc26ANwMI`);
+            const data = await response.json();
+            
+            if (data.status === 'OK') {
+              const addressComponents = data.results[0].address_components;
+              let formattedAddress = '';
+              
+              // 주소 컴포넌트에서 원하는 부분을 가져와서 주소 형식 생성
+              for (let i = 0; i < addressComponents.length; i++) {
+                const component = addressComponents[i];
+                const componentType = component.types[0];
+                
+                if (componentType === 'locality') {
+                  formattedAddress += component.long_name;
+                } else if (componentType === 'administrative_area_level_1') {
+                  formattedAddress += ` ${component.short_name}`;
+                } else if (componentType === 'administrative_area_level_2') {
+                  formattedAddress += ` ${component.long_name}`;
+                } else if (componentType === 'postal_code') {
+                  formattedAddress += ` (${component.long_name})`;
+                }
+              }
+              
+              setCurrentLocation(formattedAddress);
+            } else {
+              console.log('Geocoding API request failed.');
+              const baseloc="대한민국 서울특별시 관악구 신림동"
+              setCurrentLocation(baseloc);
+            }
+          } catch (error) {
+            console.log('Error occurred while fetching geocoding data:', error);
+            const baseloc="대한민국 서울특별시 관악구 신림동"
+            setCurrentLocation(baseloc);
+          }
+        },
+        (error) => {
+          console.log(error);
+          const baseloc="대한민국 서울특별시 관악구 신림동"
+          setCurrentLocation(baseloc);
+        }
+      );
+    } else {
+      console.log('Geolocation is not supported by this browser.');
+      const baseloc="대한민국 서울특별시 관악구 신림동"
+      setCurrentLocation(baseloc);
+    }
+  };
+  
+
+  useEffect(() => {
+    getLocation();
+  }, []);
+
+
   const getpostlogs = async () => {
     // Firestore 쿼리를 만듭니다.
     // const q = query(postlogCollection);
@@ -70,7 +134,7 @@ export default function PostLog({ setStateVar, postLogData, updateTime }) {
     const docRef = await addDoc(postlogCollection, {
       userName: postLogData.userName,
       userId: postLogData.userId,
-      location: postLogData.location,
+      location: `${currentLocation}`,
       datetime: `${date} ${hour}:${minutes}:${second}`,
       cover: postLogData.imageUrl,
       title: postLogData.songTitle,
@@ -85,7 +149,7 @@ export default function PostLog({ setStateVar, postLogData, updateTime }) {
         id: docRef.id,
         userId: postLogData.userId,
         userName: postLogData.userName,
-        location: postLogData.location,
+        location: `${currentLocation}`,
         //datetime: date + " " + time,
         datetime: `${date} ${hour}:${minutes}:${second}`,
         cover: postLogData.imageUrl,
@@ -121,7 +185,8 @@ export default function PostLog({ setStateVar, postLogData, updateTime }) {
         </div>
         <div className="w-full bg-white rounded p-4">
           <p className="text-2xl font-bold mb-1">지금 어디에 계시나요?</p>
-          <p className="mb-4">{postLogData.location}</p>
+          <p className="mb-4">{currentLocation}</p>
+          {/*<p className="mb-4">{postLogData.location}</p>*/}
           {/* <p className="text-2xl font-bold mb-1">시간</p>
           <p className="mb-4">{datetime}</p> */}
 
