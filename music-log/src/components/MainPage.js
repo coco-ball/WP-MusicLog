@@ -138,7 +138,6 @@ const MainPage = () => {
   const checkModal = async () => {
     console.log("check modal called!!!");
     if (isPlaying) {
-      console.log("here");
       const time1 = new Date(lastUpdatedTime);
       const time2 = new Date();
 
