@@ -33,7 +33,7 @@ export const getUsersPlaylists = async (refresh_token) => {
   });
 
   if (!response.ok) {
-    throw new Error("Failed to fetch playback state");
+    throw new Error("Failed to fetch playLists");
   }
   return response;
 };
@@ -54,7 +54,7 @@ export const getUsersPlayState = async (refresh_token) => {
 };
 
 export const getCurrentUser = async (refresh_token) => {
-  console.log("getUsersPlayState in lib activated");
+  console.log("getCurrentUser in lib activated");
   const { access_token } = await getAccessToken(refresh_token);
   const response = await fetch(CURRENTUSER_ENDPOINT, {
     headers: {
@@ -63,7 +63,7 @@ export const getCurrentUser = async (refresh_token) => {
   });
 
   if (!response.ok) {
-    throw new Error("Failed to fetch playback state");
+    throw new Error("Failed to fetch current user");
   }
   return response;
 };
@@ -77,8 +77,11 @@ export const getRecentlyPlayed = async (refresh_token) => {
     },
   });
 
+
   if (!response.ok) {
-    throw new Error("Failed to fetch recently played");
+    const errorMessage = `${response.status} (${response.statusText})`;
+    throw new Error(`Failed to fetch recently played: ${errorMessage}`);
   }
+
   return response;
 };

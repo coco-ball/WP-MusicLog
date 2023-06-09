@@ -13,14 +13,14 @@ export default NextAuth({
   ],
   callbacks: {
     async jwt({token, account}) {
-      console.log("jwt activated");
+      //console.log("jwt activated");
       if (account) {
         token.accessToken = account.refresh_token;
       }
       return token;
     },
     async session(session, user) {
-      console.log("session activated");
+      console.log("nextauth file session activated");
       session.user = user;
       //console.log(session);
       return session;

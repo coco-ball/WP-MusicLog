@@ -13,8 +13,6 @@ const handler = async (req, res) => {
         const { is_playing, item } = responseData;
 
         const result = { is_playing, item};
-
-        console.log("play state", result);
         return res.status(200).json(result);
     } catch (error) {
         console.log("error play state");

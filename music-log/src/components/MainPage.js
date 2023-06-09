@@ -56,17 +56,23 @@ const MainPage = () => {
 
   const getMyPlayState = async () => {
     const res = await fetch("/api/playState");
-    console.log("Activated");
     if (res.status != 200) {
       //정상적 응답일 아닐 경우 isPlaying을 처음의 false로 냅둠
+      console.log("not playing -> recently played")
+      setSongTitle(localStorage.getItem("title"));
+      setSongArtist(localStorage.getItem("singer"));
+      setImageUrl(localStorage.getItem("cover"));
     } else {
       //정상적 응답일 경우 is_playing값을 isPlaying에 할당
       const { is_playing, item } = await res.json();
-      console.log("debug item", item);
+      console.log("is playing!!!")
       setIsPlaying(is_playing);
       setSongTitle(item.name);
       setSongArtist(item.artists[0].name);
       setImageUrl(item.album.images[0].url);
+      localStorage.setItem("title", songTitle);
+      localStorage.setItem("singer", songArtist);
+      localStorage.setItem("cover", imageUrl);
     }
   };
   //컴포넌트가 렌더링될때 getMyPlayState를 자동으로 실행하기 위한 함수
@@ -74,20 +80,21 @@ const MainPage = () => {
     getMyPlayState();
   }, [stateVar]);
 
-  const getMyPlaylists = async () => {
+  //레퍼런스에서 가져온 사용하지 않는 함수
+  /*const getMyPlaylists = async () => {
     const res = await fetch("/api/playlists");
     const { items } = await res.json();
     setList(items);
-  };
+  };*/
 
   const getUserProfile = async () => {
     const res = await fetch("/api/currentUser");
     if (res.status != 200) {
     } else {
       const { id, images, display_name } = await res.json();
-      console.log("debug_id", id);
-      console.log("debug", images);
-      console.log("debug", display_name);
+      //console.log("debug_id", id);
+      //console.log("debug", images);
+      //console.log("debug", display_name);
       setUserId(id);
       setUserName(display_name);
       setUserImg(images[0].url);
@@ -97,6 +104,23 @@ const MainPage = () => {
   useEffect(() => {
     getUserProfile();
   }, [session]);
+
+//최근 재생 목록 불러오려고 시도한 코드
+/*
+  const getRecentlyPlayed = async() => {
+    const res = await fetch("/api/recentlyPlayed");
+    if (res.status != 200) {
+      //정상적 응답일 아닐 경우 isPlaying을 처음의 false로 냅둠
+    } else {
+      //정상적 응답일 경우 is_playing값을 isPlaying에 할당
+      const { total, items } = await res.json();
+      if (total != 0) {
+        setSongTitle(items[0].track.name);
+        setSongArtist(items[0].artists[0].name);
+        setImageUrl(items[0].album.images[0].url);
+      }
+    }
+  }*/
 
   //------------------------------------------------------
   //변수들을 postLog.js에 넘기기 위해 배열 생성(너무 많아서!)
