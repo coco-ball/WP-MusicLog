@@ -10,10 +10,12 @@ import MusicLog from "./MusicLog.js";
 import { getPlaybackState } from "@/pages/lib/Spotify";
 import { data } from "autoprefixer";
 
+
 const MainPage = () => {
   //------------------------------------------------------
   //메인 페이지 아래로 모드에 따라 대응되는 컴포넌트 렌더링
   const [stateVar, setStateVar] = useState("WRITE");
+
 
   function toggleStateVar(mode) {
     setStateVar(mode);
@@ -101,6 +103,7 @@ const MainPage = () => {
     getUserProfile();
   }, [session]);
 
+
   //------------------------------------------------------
   //변수들을 postLog.js에 넘기기 위해 배열 생성(너무 많아서!)
   const postLogData = {
@@ -176,7 +179,8 @@ const MainPage = () => {
             </div>
           ) : (
             <div className="list">
-              <MusicLog />
+              <MusicLog 
+              ></MusicLog>
             </div>
           )}
         </div>
