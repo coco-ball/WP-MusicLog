@@ -11,11 +11,7 @@ const handler = async (req, res) => {
     const responseData = await response.json();
 
     const { id, images, display_name } = responseData;
-
     const result = { id, images, display_name };
-
-    console.log("current user", result);
-
     return res.status(200).json(result);
   } catch (error) {
     console.log("error current user");

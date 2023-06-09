@@ -11,22 +11,12 @@ const handler = async (req, res) => {
 
         const responseData = await response.json();
         const { is_playing, item } = responseData;
-
         const result = { is_playing, item};
-
-        console.log("play state", result);
         return res.status(200).json(result);
     } catch (error) {
         console.log("error play state");
         return res.status(204).end();
     }
 };
-
-
-
-
-
-
-
 
 export default handler;
