@@ -10,11 +10,12 @@ import MusicLog from "./MusicLog.js";
 import { getPlaybackState } from "@/pages/lib/Spotify";
 import { data } from "autoprefixer";
 
+
 const MainPage = () => {
   //------------------------------------------------------
   //메인 페이지 아래로 모드에 따라 대응되는 컴포넌트 렌더링
   const [stateVar, setStateVar] = useState("WRITE");
-  const [logs, setlogs] = useState([]);
+
 
   function toggleStateVar(mode) {
     setStateVar(mode);
@@ -102,19 +103,6 @@ const MainPage = () => {
     getUserProfile();
   }, [session]);
 
-  const deletelog = (id) => {
-    // Firestore 에서 해당 id를 가진 할 일을 삭제합니다.
-    const logDoc = doc(postlogCollection, id);
-    deleteDoc(logDoc);
-
-    // 해당 id를 가진 할 일을 제외한 나머지 목록을 새로운 상태로 저장합니다.
-    // setTodos(todos.filter((todo) => todo.id !== id));
-    setlogs(
-      logs.filter((log) => {
-        return log.id !== id;
-      })
-    );
-  };
 
   //------------------------------------------------------
   //변수들을 postLog.js에 넘기기 위해 배열 생성(너무 많아서!)
@@ -192,10 +180,7 @@ const MainPage = () => {
           ) : (
             <div className="list">
               <MusicLog 
-              key={postLogData.id}
-              log={postLogData}
-              onDelete={() => deletelog(postLogData.id)}
-              />
+              ></MusicLog>
             </div>
           )}
         </div>
