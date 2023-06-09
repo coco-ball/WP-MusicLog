@@ -19,7 +19,7 @@ import { data } from "autoprefixer";
 
 const postlogCollection = collection(db, "postlogs");
 
-export default function PostLog({ setStateVar, postLogData }) {
+export default function PostLog({ setStateVar, postLogData, updateTime }) {
   const { data: session } = useSession();
   const [logs, setLogs] = useState([]);
   const [input, setInput] = useState("");
@@ -98,6 +98,10 @@ export default function PostLog({ setStateVar, postLogData }) {
     ]);
     setInput("");
     setStateVar("LIST");
+
+    const currentTime = new Date().toISOString();
+    updateTime(currentTime);
+    localStorage.setItem("lastUpdateTime", currentTime);
   };
 
   // console.log(logs);

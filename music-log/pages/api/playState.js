@@ -11,7 +11,6 @@ const handler = async (req, res) => {
 
         const responseData = await response.json();
         const { is_playing, item } = responseData;
-
         const result = { is_playing, item};
         return res.status(200).json(result);
     } catch (error) {

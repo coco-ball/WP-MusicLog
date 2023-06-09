@@ -13,7 +13,7 @@ import { data } from "autoprefixer";
 const MainPage = () => {
   //------------------------------------------------------
   //메인 페이지 아래로 모드에 따라 대응되는 컴포넌트 렌더링
-  const [stateVar, setStateVar] = useState("WRITE");
+  const [stateVar, setStateVar] = useState("LIST");
 
   function toggleStateVar(mode) {
     setStateVar(mode);
@@ -51,8 +51,19 @@ const MainPage = () => {
   //장소는 아직
   const location = "서울대학교 83동";
 
+  const [lastUpdatedTime, updateTime] = useState();
+
   //-------------------------------------------------------
   //API로 값 기져오고 변수(state)에 저장
+
+  const initUpdateTime = async() => {
+    const time = localStorage.getItem("lastUpdateTime");
+    updateTime(time);
+  }
+
+  useEffect(() => {
+    initUpdateTime();
+  },[]);
 
   const getMyPlayState = async () => {
     const res = await fetch("/api/playState");
@@ -121,6 +132,31 @@ const MainPage = () => {
       }
     }
   }*/
+
+  const wantedDiff = 1000*60; //테스트용으로 1초로 설정
+
+  const checkModal = async () => {
+    console.log("check modal called!!!");
+    if (isPlaying) {
+      console.log("here");
+      const time1 = new Date(lastUpdatedTime);
+      const time2 = new Date();
+
+      const timeDifference = time2 - time1; // 현재 시간과 변환한 시간의 간격
+      //const threeHoursInMillis = 3 * 60 * 60 * 1000; // 3시간을 밀리초로 변환
+
+      console.log("timeDiff: ", timeDifference);
+
+      if (timeDifference > wantedDiff) {
+        openModal();
+      }
+    }
+  }
+
+  useEffect(() => {
+    checkModal();
+  }, [isPlaying]);
+
 
   //------------------------------------------------------
   //변수들을 postLog.js에 넘기기 위해 배열 생성(너무 많아서!)
@@ -193,6 +229,7 @@ const MainPage = () => {
               <PostLog
                 setStateVar={setStateVar}
                 postLogData={postLogData}
+                updateTime={updateTime}
               ></PostLog>
             </div>
           ) : (
