@@ -10,10 +10,12 @@ import MusicLog from "./MusicLog.js";
 import { getPlaybackState } from "@/pages/lib/Spotify";
 import { data } from "autoprefixer";
 
+
 const MainPage = () => {
   //------------------------------------------------------
   //메인 페이지 아래로 모드에 따라 대응되는 컴포넌트 렌더링
   const [stateVar, setStateVar] = useState("LIST");
+
 
   function toggleStateVar(mode) {
     setStateVar(mode);
@@ -115,6 +117,7 @@ const MainPage = () => {
   useEffect(() => {
     getUserProfile();
   }, [session]);
+
 
 //최근 재생 목록 불러오려고 시도한 코드
 /*
@@ -233,7 +236,8 @@ const MainPage = () => {
             </div>
           ) : (
             <div className="list">
-              <MusicLog />
+              <MusicLog 
+              ></MusicLog>
             </div>
           )}
         </div>
