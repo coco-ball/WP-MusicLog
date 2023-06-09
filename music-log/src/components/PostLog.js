@@ -19,7 +19,7 @@ import { data } from "autoprefixer";
 
 const postlogCollection = collection(db, "logs");
 
-export default function PostLog({ setStateVar, postLogData }) {
+export default function PostLog({ setStateVar, postLogData, updateTime }) {
   const { data: session } = useSession();
   const [logs, setLogs] = useState([]);
   const [input, setInput] = useState("");
@@ -96,6 +96,10 @@ export default function PostLog({ setStateVar, postLogData }) {
     ]);
     setInput("");
     setStateVar("LIST");
+
+    const currentTime = new Date().toISOString();
+    updateTime(currentTime);
+    localStorage.setItem("lastUpdateTime", currentTime);
   };
 
   // console.log(logs);
@@ -113,6 +117,7 @@ export default function PostLog({ setStateVar, postLogData }) {
           <img className="w-auto mb-4 rounded" src={postLogData.imageUrl}></img>
           <p className="text-center text-3xl mb-1">{postLogData.songTitle}</p>
           <p className="text-center text-2xl">{postLogData.songArtist}</p>
+          <p className="text-center text-xl mt-4">{postLogData.isPlaying === true ? "지금 듣고 있는 노래" : "최근에 들은 노래"}</p>
         </div>
         <div className="w-full bg-white rounded p-4">
           <p className="text-2xl font-bold mb-1">지금 어디에 계시나요?</p>
