@@ -70,7 +70,6 @@ export default function PostLog({ setStateVar, postLogData }) {
     const docRef = await addDoc(postlogCollection, {
       userName: postLogData.userName,
       userId: postLogData.userId,
-      id: String(Date.now()),
       location: postLogData.location,
       datetime: `${date} ${hour}:${minutes}:${second}`,
       cover: postLogData.imageUrl,

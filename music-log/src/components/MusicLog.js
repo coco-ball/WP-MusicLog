@@ -20,7 +20,7 @@ import {
 // // DB의 postlogs 컬렉션 참조를 만듭니다. 컬렉션 사용시 잘못된 컬렉션 이름 사용을 방지합니다.
 const postlogCollection = collection(db, "logs");
 
-const MusicLog = () => {
+const MusicLog = ({onDelete}) => {
   const { data: session } = useSession();
   const [logs, setLogs] = useState([]);
 
@@ -64,10 +64,10 @@ const MusicLog = () => {
     );
   };*/
 
-  const deleteLog = async (id) => {
+  const deleteLog = (id) => {
     // Firestore에서 해당 id를 가진 로그 항목을 삭제합니다.
     const logDoc = doc(postlogCollection, id);
-    await deleteDoc(logDoc);
+    deleteDoc(logDoc);
   
     // 로그 항목을 `logs` 배열에서도 삭제합니다.
     setLogs(logs.filter((log) => log.id !== id));
