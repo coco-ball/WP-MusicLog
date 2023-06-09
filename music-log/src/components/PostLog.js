@@ -17,7 +17,7 @@ import {
 } from "firebase/firestore";
 import { data } from "autoprefixer";
 
-const postlogCollection = collection(db, "postlogs");
+const postlogCollection = collection(db, "logs");
 
 export default function PostLog({ setStateVar, postLogData }) {
   const { data: session } = useSession();
@@ -31,7 +31,7 @@ export default function PostLog({ setStateVar, postLogData }) {
     if (!session?.session?.user?.name) return;
     const q = query(
       postlogCollection,
-      where("userName", "==", session.session.user.name),
+      where("userName", "==", session.session.user.name),//userId로 식별하려면 어떻게?
       orderBy("datetime", "asc")
     );
 
@@ -68,11 +68,10 @@ export default function PostLog({ setStateVar, postLogData }) {
     const second = String(now.getSeconds()).padStart(2,"0");//number이기 때문에 padStart 붙일 수 없음. String 변환해주어야한다.
  
     const docRef = await addDoc(postlogCollection, {
-      userId: postLogData.userId,
       userName: postLogData.userName,
-      id: Date.now(),
+      userId: postLogData.userId,
+      id: String(Date.now()),
       location: postLogData.location,
-      //datetime: date + " " + modifiedTime,
       datetime: `${date} ${hour}:${minutes}:${second}`,
       cover: postLogData.imageUrl,
       title: postLogData.songTitle,
