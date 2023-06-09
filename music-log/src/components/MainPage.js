@@ -62,20 +62,17 @@ const MainPage = () => {
     } else {
       //정상적 응답일 경우 is_playing값을 isPlaying에 할당
       const { is_playing, item } = await res.json();
-      console.log("degub", item);
+      console.log("debug item", item);
       setIsPlaying(is_playing);
-      if (is_playing) {
-        //노래 제목, 아티스트, 사진 업데이트
-        setSongTitle(item.name);
-        setSongArtist(item.artists[0].name);
-        setImageUrl(item.album.images[0].url);
-      }
+      setSongTitle(item.name);
+      setSongArtist(item.artists[0].name);
+      setImageUrl(item.album.images[0].url);
     }
   };
   //컴포넌트가 렌더링될때 getMyPlayState를 자동으로 실행하기 위한 함수
   useEffect(() => {
     getMyPlayState();
-  }, []);
+  }, [stateVar]);
 
   const getMyPlaylists = async () => {
     const res = await fetch("/api/playlists");
