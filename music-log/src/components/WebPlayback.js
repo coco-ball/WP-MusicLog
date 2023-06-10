@@ -19,8 +19,8 @@ const track = {
   artists: [{ name: "" }],
 };
 
-const WebPlayback = () => {
-  const [token, setToken] = useState();
+const WebPlayback = ({ token }) => {
+  // const [token, setToken] = useState();
   const [player, setPlayer] = useState(null);
   const [is_paused, setPaused] = useState(true);
   const [is_ready, setReady] = useState(false);
@@ -28,7 +28,7 @@ const WebPlayback = () => {
   const [current_position, setPosition] = useState(0);
   const [device_id, setId] = useState("");
 
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
 
   // const getToken = async () => {
   //   const res = await fetch("/api/getToken");
@@ -85,9 +85,10 @@ const WebPlayback = () => {
       const player = new window.Spotify.Player({
         name: "Web Playback SDK",
         getOAuthToken: (cb) => {
-          // Run code to get a fresh access token
-          console.log("token2 " + token);
-          setToken(session.token.accessToken);
+          // console.log("refreshtoken " + session.token.accessToken);
+          // console.log("accesstoken " + session.token.token);
+          // setToken(session.token.token);
+          console.log("propstoken " + token);
           cb(token);
         },
         volume: 0.5,

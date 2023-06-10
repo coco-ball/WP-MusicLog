@@ -222,8 +222,9 @@ const MainPage = () => {
         </div>
         <div className="contents">
           {stateVar === "PLAYER" ? (
-            <WebPlayback></WebPlayback>
-          ) : stateVar === "WRITE" ? (
+            <WebPlayback token={session.token.token}></WebPlayback>
+          ) : // <WebPlayback token={session.token.accessToken}></WebPlayback>
+          stateVar === "WRITE" ? (
             <div className="write">
               <PostLog
                 setStateVar={setStateVar}
