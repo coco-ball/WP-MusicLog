@@ -22,6 +22,21 @@ const getAccessToken = async (refresh_token) => {
 
   return response.json();
 };
+// const getAccessToken = async (refresh_token) => {
+//   const response = await fetch(TOKEN_ENDPOINT, {
+//     method: "POST",
+//     headers: {
+//       Authorization: `Basic ${basic}`,
+//       "Content-Type": "application/x-www-form-urlencoded",
+//     },
+//     body: new URLSearchParams({
+//       grant_type: "refresh_token",
+//       refresh_token,
+//     }),
+//   });
+
+//   return response.json();
+// };
 
 export const getUsersPlaylists = async (refresh_token) => {
   console.log("getUsersPlaylists in lib activated");
@@ -76,7 +91,6 @@ export const getRecentlyPlayed = async (refresh_token) => {
       Authorization: `Bearer ${access_token}`,
     },
   });
-
 
   if (!response.ok) {
     const errorMessage = `${response.status} (${response.statusText})`;
