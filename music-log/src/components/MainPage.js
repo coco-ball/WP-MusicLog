@@ -11,12 +11,10 @@ import Notice, { makeNoti } from "./Notice.js";
 import { getPlaybackState } from "@/pages/lib/Spotify";
 import { data } from "autoprefixer";
 
-
 const MainPage = () => {
   //------------------------------------------------------
   //메인 페이지 아래로 모드에 따라 대응되는 컴포넌트 렌더링
   const [stateVar, setStateVar] = useState("LIST");
-
 
   function toggleStateVar(mode) {
     setStateVar(mode);
@@ -59,27 +57,27 @@ const MainPage = () => {
   //-------------------------------------------------------
   //API로 값 기져오고 변수(state)에 저장
 
-  const initUpdateTime = async() => {
+  const initUpdateTime = async () => {
     const time = localStorage.getItem("lastUpdateTime");
     updateTime(time);
-  }
+  };
 
   useEffect(() => {
     initUpdateTime();
-  },[]);
+  }, []);
 
   const getMyPlayState = async () => {
     const res = await fetch("/api/playState");
     if (res.status != 200) {
       //정상적 응답일 아닐 경우 isPlaying을 처음의 false로 냅둠
-      console.log("not playing -> recently played")
+      console.log("not playing -> recently played");
       setSongTitle(localStorage.getItem("title"));
       setSongArtist(localStorage.getItem("singer"));
       setImageUrl(localStorage.getItem("cover"));
     } else {
       //정상적 응답일 경우 is_playing값을 isPlaying에 할당
       const { is_playing, item } = await res.json();
-      console.log("is playing!!!")
+      console.log("is playing!!!");
       setIsPlaying(is_playing);
       setSongTitle(item.name);
       setSongArtist(item.artists[0].name);
@@ -119,9 +117,8 @@ const MainPage = () => {
     getUserProfile();
   }, [session]);
 
-
-//최근 재생 목록 불러오려고 시도한 코드
-/*
+  //최근 재생 목록 불러오려고 시도한 코드
+  /*
   const getRecentlyPlayed = async() => {
     const res = await fetch("/api/recentlyPlayed");
     if (res.status != 200) {
@@ -137,7 +134,7 @@ const MainPage = () => {
     }
   }*/
 
-  const wantedDiff = 1000*60; //테스트용으로 1초로 설정
+  const wantedDiff = 1000 * 60; //테스트용으로 1초로 설정
 
   const checkModal = async () => {
     console.log("check modal called!!!");
@@ -154,12 +151,11 @@ const MainPage = () => {
         openModal();
       }
     }
-  }
+  };
 
   useEffect(() => {
     checkModal();
   }, [isPlaying]);
-
 
   //------------------------------------------------------
   //변수들을 postLog.js에 넘기기 위해 배열 생성(너무 많아서!)
@@ -266,8 +262,7 @@ const MainPage = () => {
             </div>
           ) : (
             <div className="list">
-              <MusicLog 
-              ></MusicLog>
+              <MusicLog></MusicLog>
             </div>
           )}
         </div>
