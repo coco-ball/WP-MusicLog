@@ -36,6 +36,4 @@ export default function Notice() {
 
     return true;
   }
-
-  
 }
