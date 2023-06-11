@@ -260,25 +260,25 @@ const MainPage = () => {
               {stateVar === "WRITE" ? "음악 로그 보기" : "로그 작성하기"}
             </button>
 
-            <button
+            {/* <button
               className="fixed bottom-40 right-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
               onClick={openModal}
             >
               모달 열기
-            </button>
-            <button
+            </button> */}
+            {/* <button
               className="fixed bottom-20 right-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
               onClick={() => toggleStateVar("PLAYER")}
             >
               플레이어
-            </button>
+            </button> */}
             {/* 푸시 알림 보내기 */}
-            <button
+            {/* <button
               className="fixed bottom-60 right-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
               onClick={makeNoti}
             >
               푸시알림
-            </button>
+            </button> */}
           </div>
           <div className="contents">
             {stateVar === "PLAYER" ? (
