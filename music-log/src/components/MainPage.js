@@ -64,8 +64,7 @@ const MainPage = () => {
     const time2 = localStorage.getItem("lastPushTime");
     updateTime(time);
     updatePushTime(time2);
-  }
-
+  };
 
   useEffect(() => {
     initUpdateTime();
@@ -196,16 +195,16 @@ const MainPage = () => {
     }
   }
 
-  const wantedDiff2 = 1000*60*5; //마지막 업데이트로부터 5분 이후라면 푸시
-  const wantedDiff3 = 1000*60*3; //마지막 푸시로부터 3분 이후라면 푸시
+  const wantedDiff2 = 1000 * 60 * 5; //마지막 업데이트로부터 5분 이후라면 푸시
+  const wantedDiff3 = 1000 * 60 * 3; //마지막 푸시로부터 3분 이후라면 푸시
 
-  const sendPush = async() => {
+  const sendPush = async () => {
     //console.log("sendPush activated");
     const time1 = new Date(lastUpdatedTime);
     const time2 = new Date();
 
     const timeDifference = time2 - time1; // 현재 시간과 변환한 시간의 간격
-      //const threeHoursInMillis = 3 * 60 * 60 * 1000; // 3시간을 밀리초로 변환
+    //const threeHoursInMillis = 3 * 60 * 60 * 1000; // 3시간을 밀리초로 변환
     if (timeDifference > wantedDiff2) {
       console.log("마지막 업데이트로부터 시간이 지났음");
       const time3 = new Date(lastPushTime);
@@ -217,7 +216,7 @@ const MainPage = () => {
         makeNoti();
       }
     }
-  }
+  };
 
   useEffect(() => {
     sendPush();
@@ -232,71 +231,72 @@ const MainPage = () => {
     };
   }, []);
 
-
   return (
     <>
       <Header username={userName} userImg={userImg}></Header>
-      <div className="w-screen px-64 flex-col justify-center">
-        <div className="flex mt-12 mb-8">
-          <img
-            src={stateVar === "WRITE" ? "/write.svg" : "album.svg"}
-            alt=""
-            className="mr-4"
-          ></img>
-          <h1 className="text-5xl font-bold">
-            {stateVar === "WRITE"
-              ? "음악 로그 작성"
-              : stateVar === "LIST"
-              ? `${userName}님의 음악로그`
-              : `${userName}님의 플레이어`}
-          </h1>
-          <button
-            className={`w-30 px-5 py-2 ml-auto text-3xl rounded bg-gray-300 hover:bg-gray-400`}
-            onClick={() =>
-              toggleStateVar((prevState) =>
-                prevState === "WRITE" ? "LIST" : "WRITE"
-              )
-            }
-          >
-            {stateVar === "WRITE" ? "음악 로그 보기" : "로그 작성하기"}
-          </button>
+      <div className="w-screen absolute top-16 flex justify-center">
+        <div className="flex-col justify-center max-w-5xl">
+          <div className="flex mt-12 mb-8">
+            <img
+              src={stateVar === "WRITE" ? "/write.svg" : "album.svg"}
+              alt=""
+              className="mr-4"
+            ></img>
+            <h1 className="text-5xl font-bold">
+              {stateVar === "WRITE"
+                ? "음악 로그 작성"
+                : stateVar === "LIST"
+                ? `${userName}님의 음악로그`
+                : `${userName}님의 플레이어`}
+            </h1>
+            <button
+              className={`w-30 px-5 py-2 ml-auto text-3xl rounded bg-gray-300 hover:bg-gray-400`}
+              onClick={() =>
+                toggleStateVar((prevState) =>
+                  prevState === "WRITE" ? "LIST" : "WRITE"
+                )
+              }
+            >
+              {stateVar === "WRITE" ? "음악 로그 보기" : "로그 작성하기"}
+            </button>
 
-          <button
-            className="fixed bottom-40 right-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-            onClick={openModal}
-          >
-            모달 열기
-          </button>
-          <button
-            className="fixed bottom-20 right-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-            onClick={() => toggleStateVar("PLAYER")}
-          >
-            플레이어
-          </button>
-          {/* 푸시 알림 보내기 */}
-          <button
-            className="fixed bottom-60 right-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-            onClick={makeNoti}
-          >
-            푸시알림
-          </button>
-        </div>
-        <div className="contents">
-          {stateVar === "PLAYER" ? (
-            <Player></Player>
-          ) : stateVar === "WRITE" ? (
-            <div className="write">
-              <PostLog
-                setStateVar={setStateVar}
-                postLogData={postLogData}
-                updateTime={updateTime}
-              ></PostLog>
-            </div>
-          ) : (
-            <div className="list">
-              <MusicLog></MusicLog>
-            </div>
-          )}
+            <button
+              className="fixed bottom-40 right-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+              onClick={openModal}
+            >
+              모달 열기
+            </button>
+            <button
+              className="fixed bottom-20 right-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+              onClick={() => toggleStateVar("PLAYER")}
+            >
+              플레이어
+            </button>
+            {/* 푸시 알림 보내기 */}
+            <button
+              className="fixed bottom-60 right-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+              onClick={makeNoti}
+            >
+              푸시알림
+            </button>
+          </div>
+          <div className="contents">
+            {stateVar === "PLAYER" ? (
+              <Player></Player>
+            ) : stateVar === "WRITE" ? (
+              <div className="write">
+                <PostLog
+                  setStateVar={setStateVar}
+                  postLogData={postLogData}
+                  updateTime={updateTime}
+                ></PostLog>
+              </div>
+            ) : (
+              <div className="list">
+                <MusicLog></MusicLog>
+              </div>
+            )}
+          </div>
         </div>
       </div>
       <MusicBar postLogData={postLogData} setStateVar={setStateVar}></MusicBar>
