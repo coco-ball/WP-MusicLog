@@ -208,7 +208,7 @@ export default function PostLog({ setStateVar, postLogData, updateTime }) {
   return (
     <div>
       <body className="w-auto flex">
-        <div className = "flex bg-white border border-black ">
+        <div className = "flex bg-white border-2 border-black ">
           <div className="w-72 mr-4 bg-white p-4 flex-1">
             <img className="w-auto mb-4 " src={postLogData.imageUrl}></img>
             <p className="text-center text-2xl mb-1 font-bold">{postLogData.songTitle}</p>
