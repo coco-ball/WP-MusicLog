@@ -53,8 +53,8 @@ const MainPage = () => {
   //장소는 아직
   const location = "서울대학교 83동";
 
-  const [lastUpdatedTime, updateTime] = useState(" ");
-  const [lastPushTime, updatePushTime] = useState(" ");
+  const [lastUpdatedTime, updateTime] = useState("");
+  const [lastPushTime, updatePushTime] = useState("");
 
   //-------------------------------------------------------
   //API로 값 기져오고 변수(state)에 저장
@@ -62,9 +62,15 @@ const MainPage = () => {
   const initUpdateTime = async () => {
     const time = localStorage.getItem("lastUpdateTime");
     const time2 = localStorage.getItem("lastPushTime");
+    console.log("time2 check: ", time2);
     updateTime(time);
-    updatePushTime(time2);
-    console.log("init state check: ", lastPushTime);
+    if (time2) {
+      updatePushTime(time2);
+    } else {
+      const tmp = new Date().toISOString();
+      updatePushTime(tmp);
+    }
+    console.log("init last push time state check: ", lastPushTime);
   };
 
 
@@ -96,7 +102,17 @@ const MainPage = () => {
   //컴포넌트가 렌더링될때 getMyPlayState를 자동으로 실행하기 위한 함수
   useEffect(() => {
     getMyPlayState();
+
+    const interval = setInterval(() => {
+      getMyPlayState();
+    }, 10000); //10초에 한번씩 업데이트
+
+    return () => {
+      clearInterval(interval);
+    };
+
   }, [stateVar]);
+
 
   //레퍼런스에서 가져온 사용하지 않는 함수
   /*const getMyPlaylists = async () => {
@@ -110,9 +126,6 @@ const MainPage = () => {
     if (res.status != 200) {
     } else {
       const { id, images, display_name } = await res.json();
-      //console.log("debug_id", id);
-      //console.log("debug", images);
-      //console.log("debug", display_name);
       setUserId(id);
       setUserName(display_name);
       setUserImg(images[0].url);
@@ -142,7 +155,8 @@ const MainPage = () => {
 
   const wantedDiff = 1000 * 60; //테스트용으로 1초로 설정
 
-  const checkModal = async () => {
+  //모달 코드
+  /*const checkModal = async () => {
     console.log("check modal called!!!");
     if (isPlaying) {
       const time1 = new Date(lastUpdatedTime);
@@ -161,7 +175,7 @@ const MainPage = () => {
 
   useEffect(() => {
     checkModal();
-  }, [isPlaying]);
+  }, [isPlaying]);*/
 
   //------------------------------------------------------
   //변수들을 postLog.js에 넘기기 위해 배열 생성(너무 많아서!)
@@ -205,7 +219,7 @@ const MainPage = () => {
   const wantedDiff3 = 1000 * 60 * 3; //마지막 푸시로부터 3분 이후라면 푸시
 
   const sendPush = async () => {
-    //console.log("sendPush activated");
+    console.log("sendPush activated");
     const time1 = new Date(lastUpdatedTime);
     const time2 = new Date();
 
@@ -218,10 +232,10 @@ const MainPage = () => {
       const timeDifference2 = time2 - time3;
       if (timeDifference2 > wantedDiff3) {
         console.log("마지막 푸시로부터 시간이 지났음");
-        const str = new Date().toISOString;
+        const str = new Date().toISOString();
         localStorage.setItem("lastPushTime", str);
         updatePushTime(str);
-        console.log("state 업데이트 체크: ", lastPushTime);
+        //console.log("state 업데이트 체크: ", lastPushTime);
         makeNoti();
       }
     }
@@ -239,6 +253,12 @@ const MainPage = () => {
       clearInterval(interval);
     };
   }, []);
+
+
+  useEffect(() => {
+    console.log("useeffect로 state 업데이트 체크: ", lastPushTime);
+  }, [lastPushTime]);
+
 
   return (
     <>

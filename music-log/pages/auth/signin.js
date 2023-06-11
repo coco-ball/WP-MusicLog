@@ -31,7 +31,8 @@ export default function Signin() {
                 bg-[#617FF5] text-white
                 border border-[#617FF5]
                 hover:bg-white hover:text-[#617FF5]
-                text-xl font-bold`}
+                text-xl font-bold
+                shadow-[10px_10px_0px_0px_rgba(0,0,0,1)]`}
               onClick={() => signIn()}
             >
               SIGN IN
