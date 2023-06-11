@@ -328,7 +328,7 @@ const MainPage = () => {
           </div>
         </div>
       </div>
-      <MusicBar postLogData={postLogData} setStateVar={setStateVar}></MusicBar>
+      {stateVar === "LIST" ?(<MusicBar postLogData={postLogData} setStateVar={setStateVar}></MusicBar>):<div></div>}
       {/* 푸시알림보내기끝 */}
       <Modal
         isOpen={modalOpen}
