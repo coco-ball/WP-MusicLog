@@ -174,8 +174,9 @@ const MainPage = () => {
   };
 
   //푸시알림 보내는 makeNoti() 함수 정의
-  function makeNoti() {
+  function makeNotice() {
     // 사용자 응답에 따라 단추를 보이거나 숨기도록 설정
+    Notice();
     if (
       Notification.permission === "denied" ||
       Notification.permission === "default"
@@ -193,6 +194,10 @@ const MainPage = () => {
       });
     }
   }
+
+  useEffect(() => {
+    makeNotice();
+  }, []);
 
   return (
     <>
