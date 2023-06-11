@@ -24,7 +24,7 @@ export default function Signin() {
               지금 듣고 있는 노래로
               <br />하루의 기록을 남겨보세요
             </div>
-            <div className="text-l mt-5 mb-10">
+            <div className="font-bold mt-5 mb-10">
               Music Log는 사용자가 현재 듣고 있는 노래를 기반으로
               <br/>하루의 음악 로그를 남기는 앱입니다.
               <br/>이 앱은 Spotify API와 연동하여 사용자가
