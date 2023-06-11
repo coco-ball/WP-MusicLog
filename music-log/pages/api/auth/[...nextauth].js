@@ -6,7 +6,7 @@ export default NextAuth({
     SpotifyProvider({
       // TODO: 후에 이 부분을 추가로 수정하면 될 듯!
       authorization: 
-      'https://accounts.spotify.com/authorize?scope=user-read-email,user-read-playback-state,user-read-currently-playing',
+      'https://accounts.spotify.com/authorize?scope=user-read-email,user-read-playback-state,user-read-currently-playing,user-read-recently-played',
       clientId: process.env.SPOTIFY_CLIENT_ID,
       clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
     }),
