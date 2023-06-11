@@ -259,18 +259,78 @@ const MainPage = () => {
 
   return (
     <>
-      <Header
-        username={userName}
-        userImg={userImg}
-        setStateVar={setStateVar}
-      ></Header>
-      <SubHeader
-        stateVar={stateVar}
-        userName={userName}
-        toggleStateVar={toggleStateVar}
-      ></SubHeader>
-      <div className="w-screen absolute top-40 flex justify-center">
-        <div className="flex-col justify-center max-w-5xl mx-8">
+      <Header username={userName} userImg={userImg}></Header>
+      <div className="w-screen absolute top-16 flex justify-center">
+        <div className="flex-col justify-center max-w-5xl">
+          <div className="flex mt-12 mb-8">
+            <img
+              src={stateVar === "WRITE" ? "/write.svg" : "album.svg"}
+              alt=""
+              className="mr-4"
+            ></img>
+            <h1 className="text-5xl font-bold">
+              {stateVar === "WRITE"
+                ? "음악 로그 작성"
+                : stateVar === "LIST"
+                ? `${userName}님의 음악로그`
+                : `${userName}님의 플레이어`}
+            </h1>
+            <button
+              className={`w-30 px-5 py-2 ml-auto text-3xl rounded bg-gray-300 hover:bg-gray-400`}
+              onClick={() =>
+                toggleStateVar((prevState) =>
+                  prevState === "WRITE" ? "LIST" : "WRITE"
+                )
+              }
+            >
+              {stateVar === "WRITE" ? "음악 로그 보기" : "로그 작성하기"}
+            </button>
+
+      <div className="w-screen px-64 flex-col justify-center">
+        <div className="flex mt-12 mb-8">
+          <img
+            src={stateVar === "WRITE" ? "/write.svg" : "album.svg"}
+            alt=""
+            className="mr-4"
+          ></img>
+          <h1 className="text-4xl font-bold">
+            {stateVar === "WRITE"
+              ? "기록하기"
+              : stateVar === "LIST"
+              ? `${userName}님의 음악로그`
+              : `${userName}님의 플레이어`}
+          </h1>
+          <button
+            className={`w-30 px-4 py-2 ml-auto border border-black text-white text-l bg-[#617FF5] hover:bg-[#a5b4fc]`}
+            onClick={() =>
+              toggleStateVar((prevState) =>
+                prevState === "WRITE" ? "LIST" : "WRITE"
+              )
+            }
+          >
+            {stateVar === "WRITE" ? "기록 확인하기" : "기록하기"}
+          </button>
+
+            {/* <button
+              className="fixed bottom-40 right-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+              onClick={openModal}
+            >
+              모달 열기
+            </button> */}
+            {/* <button
+              className="fixed bottom-20 right-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+              onClick={() => toggleStateVar("PLAYER")}
+            >
+              플레이어
+            </button> */}
+            {/* 푸시 알림 보내기 */}
+            {/* <button
+              className="fixed bottom-60 right-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+              onClick={makeNoti}
+            >
+              푸시알림
+            </button> */}
+          </div>
           <div className="contents">
             {stateVar === "PLAYER" ? (
               <Player></Player>
@@ -310,7 +370,9 @@ const MainPage = () => {
           closeModal();
         }}
       ></Modal>
-    </>
+     </>
   );
-};
+}
+
+
 export default MainPage;

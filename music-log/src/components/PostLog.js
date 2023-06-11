@@ -206,55 +206,42 @@ export default function PostLog({ setStateVar, postLogData, updateTime }) {
   //spotify API연동-->userid, 노래 title, artist, album cover.. 총 7개 항목 불러오기 -->
 
   return (
-    <body className="w-auto mt-12 min-w-min flex bg-white rounded p-4 border-2 border-black">
-      <div className="w-72 mr-12 ">
-        <img
-          // className="w-auto mb-4 shadow-[10px_10px_0px_0px_rgba(0,0,0,1)]"
-          className="w-auto mb-4"
-          src={postLogData.imageUrl}
-        ></img>
-        <p className={`text-center text-${textSize1} font-bold mb-1`}>
-          {postLogData.songTitle}
-        </p>
-        <p className={`text-center text-${textSize2} mb-1`}>
-          {postLogData.songArtist}
-        </p>
-        <p className="text-center text-xs mt-4">
-          {postLogData.isPlaying === true
-            ? "지금 듣고 있는 노래"
-            : "최근에 들은 노래"}
-        </p>
-      </div>
-      <div className="w-full">
-        <p className="text-xl font-bold mb-1">지금 어디에 계시나요?</p>
-        <p className="mb-4">{currentLocation}</p>
-        {/*<p className="mb-4">{postLogData.location}</p>*/}
-        {/* <p className="text-2xl font-bold mb-1">시간</p>
-          <p className="mb-4">{datetime}</p> */}
-        <p className="text-xl font-bold mb-1">
-          지금 뭐하고 계시나요? 간단한 메모를 남겨주세요.
-        </p>
-        <textarea
-          id="input-text"
-          type="text"
-          className={`w-full h-48 p-1 mt-2 bg-[#E3E6F2]
-          border-2 border-black
-          focus:outline-none focus:bg-[#E3E6F2]
-          `}
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-        ></textarea>
-        <button
-          className={`float-right p-1 ml-auto mt-1
-          bg-[#617FF5] hover:bg-[#E3E6F2] 
-          text-white text-sm
-          border-2 border-black`}
-          onClick={() => saveLog()}
-        >
-          저장하기
-        </button>
-      </div>
-    </body>
+    <div>
+      <body className="w-auto flex">
+        <div className = "flex bg-white border border-black ">
+          <div className="w-72 mr-4 bg-white p-4 flex-1">
+            <img className="w-auto mb-4 " src={postLogData.imageUrl}></img>
+            <p className="text-center text-2xl mb-1 font-bold">{postLogData.songTitle}</p>
+            <p className="text-center text-xl">{postLogData.songArtist}</p>
+            <p className="text-center text-sm mt-4">{postLogData.isPlaying === true ? "지금 듣고 있는 노래" : "최근에 들은 노래"}</p>
+          </div>
+          <div className="w-full bg-white p-4 flex-2">
+            <p className="text-xl font-bold mb-1">지금 어디에 계시나요?</p>
+            <p className="mb-4 text-sm">{currentLocation}</p>
+            {/*<p className="mb-4">{postLogData.location}</p>*/}
+            {/* <p className="text-2xl font-bold mb-1">시간</p>
+            <p className="mb-4">{datetime}</p> */}
+
+            <label htmlFor="input-text" className="text-xl font-bold">
+              지금 뭐하고 계시나요? 간단한 메모를 남겨주세요.
+            </label>
+            <textarea
+              id="input-text"
+              type="text"
+              className="w-full h-48 p-1 mt-2 bg-[#E3E6F2] focus:outline-none focus:bg-[#E3E6F2]"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+            ></textarea>
+            <button
+              className={`float-right p-1 ml-auto bg-[#617FF5] hover:bg-[#a5b4fc] text-white border border-black text-sm`}
+              onClick={() => saveLog()}
+            >
+              작성 완료
+            </button>
+          </div>
+        </div>
+      </body>
+    </div>
   );
 }
 
