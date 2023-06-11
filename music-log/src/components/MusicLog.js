@@ -15,6 +15,8 @@ import {
   orderBy,
   where,
 } from "firebase/firestore";
+import GridView from "./GridView";
+import ListView from "./ListView";
 
 // // DB의 postlogs 컬렉션 참조를 만듭니다. 컬렉션 사용시 잘못된 컬렉션 이름 사용을 방지합니다.
 const postlogCollection = collection(db, "logs");
@@ -101,74 +103,9 @@ const MusicLog = ({ onDelete }) => {
         </div>
       </button>
       {viewMode === "GRID" ? (
-        <div className="flex flex-wrap gap-4">
-          {logs.map((log, index) => (
-            <div key={index}>
-              <img
-                className="peer w-32 mb-4 rounded"
-                src={log.cover}
-                alt="앨범 커버"
-              ></img>
-              <div className="invisible peer-hover:visible mr-4 bg-white rounded p-4 absolute flex max-w-4xl">
-                <div className="mr-4">
-                  <img
-                    className="w-40 mb-4 rounded"
-                    src={log.cover}
-                    alt="앨범 커버"
-                  ></img>
-                  <p className="text-center font-bold text-xl mb-1">
-                    {log.title}
-                  </p>
-                  <p className="text-center ">{log.artist}</p>
-                </div>
-                <div>
-                  <p className="text-xl font-bold mb-1">위치</p>
-                  <p className="mb-4">{log.location}</p>
-                  <p className="text-xl font-bold mb-1">시간</p>
-                  <p className="mb-4">{log.datetime}</p>
-                  <p className="text-xl font-bold">남긴 메모</p>
-                  <p>{log.text}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+        <GridView logs={logs}></GridView>
       ) : (
-        <div>
-          {logs.map((log, index) => (
-            <div key={index} className="flex mb-8">
-              <div className="w-72 mr-4 bg-white rounded p-4">
-                <img
-                  className="w-auto mb-4 rounded"
-                  src={log.cover}
-                  alt="앨범 커버"
-                ></img>
-                <p className="text-center font-bold text-2xl mb-1">
-                  {log.title}
-                </p>
-                <p className="text-center ">{log.artist}</p>
-              </div>
-              <div key={log.id} className="w-full bg-white rounded p-4">
-                <button
-                  onClick={() => deleteLog(log.id)}
-                  className={
-                    "w-20 text-Black font-serif hover:bg-white hover:text-cyan-700 text-xs"
-                  }
-                >
-                  X
-                </button>
-                <p className="text-2xl font-bold mb-1">위치</p>
-                <p className="mb-4">{log.location}</p>
-                <p className="text-2xl font-bold mb-1">시간</p>
-                <p className="mb-4">{log.datetime}</p>
-                <label htmlFor="input-text" className="text-2xl font-bold">
-                  남긴 메모
-                </label>
-                <p>{log.text}</p>
-              </div>
-            </div>
-          ))}
-        </div>
+        <ListView logs={logs}></ListView>
       )}
     </div>
   );
