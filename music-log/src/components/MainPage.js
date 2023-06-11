@@ -211,8 +211,8 @@ const MainPage = () => {
               ? `${userName}님의 음악로그`
               : `${userName}님의 플레이어`}
           </h1>
-          {/*<button
-            className={`w-30 px-5 py-2 ml-auto text-3xl rounded bg-gray-300 hover:bg-gray-400`}
+          <button
+            className={`w-30 px-5 py-2 ml-auto text-3xl bg-gray-300 hover:bg-gray-400`}
             onClick={() =>
               toggleStateVar((prevState) =>
                 prevState === "WRITE" ? "LIST" : "WRITE"
@@ -222,7 +222,7 @@ const MainPage = () => {
             {stateVar === "WRITE" ? "음악 로그 보기" : "로그 작성하기"}
           </button>
 
-          <button
+          {/*<button
             className="fixed bottom-40 right-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
             onClick={openModal}
           >
