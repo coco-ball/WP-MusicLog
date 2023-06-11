@@ -109,7 +109,7 @@ const MusicLog = ({ onDelete }) => {
                 src={log.cover}
                 alt="앨범 커버"
               ></img>
-              <div className="invisible peer-hover:visible mr-4 bg-white rounded p-4 absolute flex">
+              <div className="invisible peer-hover:visible mr-4 bg-white rounded p-4 absolute flex max-w-4xl">
                 <div className="mr-4">
                   <img
                     className="w-40 mb-4 rounded"

@@ -37,12 +37,15 @@ export default function PostLog({ setStateVar, postLogData, updateTime }) {
             const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyDuljB_xu6sRdGsIx1MzW1wsaoc26ANwMI`);
             const data = await response.json();
             
+            console.log(data);
+
+            console.log(data.results[4].formatted_address);
             if (data.status === 'OK') {
-              const addressComponents = data.results[0].address_components;
-              let formattedAddress = '';
+              //const addressComponents = data.results[0].address_components;
+              let formattedAddress = data.results[4].formatted_address;
               
               // 주소 컴포넌트에서 원하는 부분을 가져와서 주소 형식 생성
-              for (let i = 0; i < addressComponents.length; i++) {
+              /*for (let i = 0; i < addressComponents.length; i++) {
                 const component = addressComponents[i];
                 const componentType = component.types[0];
                 
@@ -55,7 +58,7 @@ export default function PostLog({ setStateVar, postLogData, updateTime }) {
                 } else if (componentType === 'postal_code') {
                   formattedAddress += ` (${component.long_name})`;
                 }
-              }
+              }*/
               
               setCurrentLocation(formattedAddress);
             } else {
