@@ -6,6 +6,7 @@ import Header from "./Header";
 import Player from "./Player";
 import PostLog from "./PostLog.js";
 import MusicLog from "./MusicLog.js";
+import Notice, { makeNoti } from "./Notice.js";
 
 import { getPlaybackState } from "@/pages/lib/Spotify";
 import { data } from "autoprefixer";
@@ -172,6 +173,27 @@ const MainPage = () => {
     location: location,
   };
 
+  //푸시알림 보내는 makeNoti() 함수 정의
+  function makeNoti() {
+    // 사용자 응답에 따라 단추를 보이거나 숨기도록 설정
+    if (
+      Notification.permission === "denied" ||
+      Notification.permission === "default"
+    ) {
+      alert("알림이 차단된 상태입니다. 알림 권한을 허용해주세요.");
+    } else {
+      let notification = new Notification("앱 이름", {
+        body: "노래를 듣고 계시네요! 지금의 순간을 간단하게 남겨주세요.",
+        //icon: ".png"
+      });
+
+      //알림 클릭 시 이벤트
+      notification.addEventListener("click", () => {
+        setStateVar("WRITE");
+      });
+    }
+  }
+
   return (
     <>
       <Header username={userName} userImg={userImg}></Header>
@@ -212,6 +234,14 @@ const MainPage = () => {
           >
             플레이어
           </button>
+          {/* 푸시 알림 보내기 */}
+          <button
+            className="fixed bottom-60 right-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+            onClick={makeNoti}
+          >
+            푸시알림
+          </button>
+          {/* 푸시알림보내기끝 */}
           <Modal
             isOpen={modalOpen}
             closeModal={closeModal}
