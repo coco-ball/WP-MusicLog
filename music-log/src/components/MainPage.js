@@ -55,13 +55,16 @@ const MainPage = () => {
   const location = "서울대학교 83동";
 
   const [lastUpdatedTime, updateTime] = useState();
+  const [lastPushTime, updatePushTime] = useState();
 
   //-------------------------------------------------------
   //API로 값 기져오고 변수(state)에 저장
 
   const initUpdateTime = async() => {
     const time = localStorage.getItem("lastUpdateTime");
+    const time2 = localStorage.getItem("lastPushTime");
     updateTime(time);
+    updatePushTime(time2);
   }
 
   useEffect(() => {
@@ -193,6 +196,43 @@ const MainPage = () => {
       });
     }
   }
+
+  const wantedDiff2 = 1000*60*5; //마지막 업데이트로부터 5분 이후라면 푸시
+  const wantedDiff3 = 1000*60*3; //마지막 푸시로부터 3분 이후라면 푸시
+
+  const sendPush = async() => {
+    //console.log("sendPush activated");
+    const time1 = new Date(lastUpdatedTime);
+    const time2 = new Date();
+
+    const timeDifference = time2 - time1; // 현재 시간과 변환한 시간의 간격
+      //const threeHoursInMillis = 3 * 60 * 60 * 1000; // 3시간을 밀리초로 변환
+    if (timeDifference > wantedDiff2) {
+      console.log("마지막 업데이트로부터 시간이 지났음");
+      const time3 = new Date(lastPushTime);
+      const timeDifference2 = time2 - time3;
+      if (timeDifference2 > wantedDiff3) {
+        console.log("마지막 푸시로부터 시간이 지났음");
+        localStorage.setItem("lastPushTime", time2.toISOString());
+        updatePushTime(time2.toISOString());
+        makeNoti();
+      }
+    }
+  }
+
+  useEffect(() => {
+    sendPush();
+
+    const interval = setInterval(() => {
+      sendPush();
+    }, 60000); // 60000 milliseconds = 1 minute
+
+    // Clean up the interval on component unmount
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
 
   return (
     <>
