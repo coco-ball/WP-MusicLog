@@ -15,19 +15,27 @@ export default function Signin() {
   }
 
   return (
-    <div className="h-screen">
+    <div className="h-screen bg-gradient-to-b from-[#617FF5] to-[#e5e7eb]">
       <div className="grid ml-20">
-        <div className="mt-10 mb-10 text-7xl font-bold" id="title">Music Log</div>
+        <div className="mt-10 mb-10 ml-10 text-7xl font-bold text-white" id="title">Music Log</div>
         <div className="ml-10 grid grid-cols-2 gap-8">
           <div id="text" className = "mt-10">
             <div className="text-3xl font-bold">
               지금 듣고 있는 노래로
               <br />하루의 기록을 남겨보세요
             </div>
-            <div className="text-l mt-5 mb-10">Music Log는 ~~~</div>
+            <div className="text-l mt-5 mb-10">
+              Music Log는 사용자가 현재 듣고 있는 노래를 기반으로
+              <br/>하루의 음악 로그를 남기는 앱입니다.
+              <br/>이 앱은 Spotify API와 연동하여 사용자가
+              <br/>현재 재생 중인 노래 정보를 실시간으로 가져옵니다.
+              <br/>
+              <br/>이제 Music Log와 함께 음악 청취를 기록하고,
+              <br/>당신만의 음악 세계를 탐험해보세요!
+              </div>
             <button
               className={`w-40
-                p-3 mb-4 mt-10
+                p-3 mb-4 mt-4
                 bg-[#617FF5] text-white
                 border border-[#617FF5]
                 hover:bg-white hover:text-[#617FF5]
@@ -38,8 +46,8 @@ export default function Signin() {
               SIGN IN
             </button>
           </div>
-          <div id="image" className="w-3000">
-            <img src="/The Band.png" alt="The Band" />
+          <div id="image" className="w-1000">
+            <img src="/front.svg" alt="listening music" style={{ width: "75%", height: "auto" }}/>
           </div>
         </div>
       </div>
