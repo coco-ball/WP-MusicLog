@@ -185,8 +185,10 @@ const MainPage = () => {
     ) {
       alert("알림이 차단된 상태입니다. 알림 권한을 허용해주세요.");
     } else {
-      let notification = new Notification("앱 이름", {
-        body: "노래를 듣고 계시네요! 지금의 순간을 간단하게 남겨주세요.",
+      getMyPlayState();
+      if (isPlaying) {
+        let notification = new Notification("Music Log", {
+        body: `지금 ${songArtist}의 ${songTitle}를 듣고 계시네요! 지금의 순간을 간단하게 남겨주세요.`,
         //icon: ".png"
       });
 
@@ -194,6 +196,8 @@ const MainPage = () => {
       notification.addEventListener("click", () => {
         setStateVar("WRITE");
       });
+      }
+      
     }
   }
 
@@ -210,11 +214,13 @@ const MainPage = () => {
     if (timeDifference > wantedDiff2) {
       console.log("마지막 업데이트로부터 시간이 지났음");
       const time3 = new Date(lastPushTime);
+      console.log("마지막 푸시 시간: ", lastPushTime);
       const timeDifference2 = time2 - time3;
       if (timeDifference2 > wantedDiff3) {
         console.log("마지막 푸시로부터 시간이 지났음");
         localStorage.setItem("lastPushTime", time2.toISOString());
         updatePushTime(time2.toISOString());
+        console.log("state 업데이트 체크: ", lastPushTime);
         makeNoti();
       }
     }
