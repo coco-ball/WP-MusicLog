@@ -7,6 +7,7 @@ import Player from "./Player";
 import PostLog from "./PostLog.js";
 import MusicLog from "./MusicLog.js";
 import Notice, { makeNoti } from "./Notice.js";
+import MusicBar from "./MusicBar";
 
 import { getPlaybackState } from "@/pages/lib/Spotify";
 import { data } from "autoprefixer";
@@ -53,14 +54,18 @@ const MainPage = () => {
   const location = "서울대학교 83동";
 
   const [lastUpdatedTime, updateTime] = useState();
+  const [lastPushTime, updatePushTime] = useState();
 
   //-------------------------------------------------------
   //API로 값 기져오고 변수(state)에 저장
 
   const initUpdateTime = async () => {
     const time = localStorage.getItem("lastUpdateTime");
+    const time2 = localStorage.getItem("lastPushTime");
     updateTime(time);
-  };
+    updatePushTime(time2);
+  }
+
 
   useEffect(() => {
     initUpdateTime();
@@ -166,6 +171,7 @@ const MainPage = () => {
     imageUrl: imageUrl,
     userId: userId,
     userName: userName,
+    userImg: userImg,
     location: location,
   };
 
@@ -189,6 +195,43 @@ const MainPage = () => {
       });
     }
   }
+
+  const wantedDiff2 = 1000*60*5; //마지막 업데이트로부터 5분 이후라면 푸시
+  const wantedDiff3 = 1000*60*3; //마지막 푸시로부터 3분 이후라면 푸시
+
+  const sendPush = async() => {
+    //console.log("sendPush activated");
+    const time1 = new Date(lastUpdatedTime);
+    const time2 = new Date();
+
+    const timeDifference = time2 - time1; // 현재 시간과 변환한 시간의 간격
+      //const threeHoursInMillis = 3 * 60 * 60 * 1000; // 3시간을 밀리초로 변환
+    if (timeDifference > wantedDiff2) {
+      console.log("마지막 업데이트로부터 시간이 지났음");
+      const time3 = new Date(lastPushTime);
+      const timeDifference2 = time2 - time3;
+      if (timeDifference2 > wantedDiff3) {
+        console.log("마지막 푸시로부터 시간이 지났음");
+        localStorage.setItem("lastPushTime", time2.toISOString());
+        updatePushTime(time2.toISOString());
+        makeNoti();
+      }
+    }
+  }
+
+  useEffect(() => {
+    sendPush();
+
+    const interval = setInterval(() => {
+      sendPush();
+    }, 60000); // 60000 milliseconds = 1 minute
+
+    // Clean up the interval on component unmount
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
 
   return (
     <>
@@ -237,17 +280,6 @@ const MainPage = () => {
           >
             푸시알림
           </button>
-          {/* 푸시알림보내기끝 */}
-          <Modal
-            isOpen={modalOpen}
-            closeModal={closeModal}
-            //setState 속성에 익명의 화살표 함수를 전달
-            setState={() => {
-              //setStateVar 함수를 호출하여 stateVar 상태 변수의 값을 "WRITE"로 변경
-              setStateVar("WRITE");
-              closeModal();
-            }}
-          ></Modal>
         </div>
         <div className="contents">
           {stateVar === "PLAYER" ? (
@@ -267,6 +299,18 @@ const MainPage = () => {
           )}
         </div>
       </div>
+      <MusicBar postLogData={postLogData} setStateVar={setStateVar}></MusicBar>
+      {/* 푸시알림보내기끝 */}
+      <Modal
+        isOpen={modalOpen}
+        closeModal={closeModal}
+        //setState 속성에 익명의 화살표 함수를 전달
+        setState={() => {
+          //setStateVar 함수를 호출하여 stateVar 상태 변수의 값을 "WRITE"로 변경
+          setStateVar("WRITE");
+          closeModal();
+        }}
+      ></Modal>
     </>
   );
 };
