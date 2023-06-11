@@ -17,11 +17,11 @@ export default NextAuth({
       //console.log("jwt activated");
       if (account) {
         token.accessToken = account.refresh_token;
-        token.token = account.access_token;
+        // token.token = account.access_token;
       }
       return token;
     },
-    async session(session, user, token) {
+    async session(session, user) {
       console.log("nextauth file session activated");
       session.user = user;
       // session.accessToken = token.accessToken;

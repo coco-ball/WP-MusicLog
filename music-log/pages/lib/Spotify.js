@@ -15,6 +15,7 @@ const getAccessToken = async (refresh_token) => {
       "Content-Type": "application/x-www-form-urlencoded",
     },
     body: new URLSearchParams({
+      // redirect_uri: "http://localhost:3000/auth/callback",
       grant_type: "refresh_token",
       refresh_token,
     }),
@@ -22,6 +23,7 @@ const getAccessToken = async (refresh_token) => {
 
   return response.json();
 };
+
 // const getAccessToken = async (refresh_token) => {
 //   const response = await fetch(TOKEN_ENDPOINT, {
 //     method: "POST",

@@ -1,23 +1,32 @@
-// const client_id = process.env.SPOTIFY_CLIENT_ID;
-// const client_secret = process.env.SPOTIFY_CLIENT_SECRET;
+import { getAccessToken } from "@/pages/lib/Spotify";
+import { getSession } from "next-auth/react";
 
-// var authOptions = {
-//   url: "https://accounts.spotify.com/api/token",
-//   headers: {
-//     Authorization:
-//       "Basic " +
-//       new Buffer.from(client_id + ":" + client_secret).toString("base64"),
-//   },
-//   form: {
-//     grant_type: "client_credentials",
-//   },
-//   json: true,
-// };
+const handler = async (req, res) => {
+  console.log("gettoken handler");
+  try {
+    const {
+      token: { accessToken },
+    } = await getSession({ req });
 
-// request.post(authOptions, function (error, response, body) {
-//   if (!error && response.statusCode === 200) {
-//     var token = body.access_token;
+    console.log(token);
+    const { access_token } = await getAccessToken(accessToken);
 
-//     console.log(token);
-//   }
-// });
+    // const { access_token } = await response.json();
+    const result = {
+      access_token,
+    };
+    // const token = access_token;
+
+    // const responseData = await response.json();
+    // const { is_playing, item } = responseData;
+    // const result = { is_playing, item};
+
+    // console.log("gettoken", result);
+    return res.status(200).json(result);
+  } catch (error) {
+    console.log("error gettoken");
+    return res.status(204).end();
+  }
+};
+
+export default handler;
