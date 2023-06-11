@@ -183,7 +183,7 @@ const MainPage = () => {
     ) {
       alert("알림이 차단된 상태입니다. 알림 권한을 허용해주세요.");
     } else {
-      let notification = new Notification("앱 이름", {
+      let notification = new Notification("뮤직 로그", {
         body: "노래를 듣고 계시네요! 지금의 순간을 간단하게 남겨주세요.",
         //icon: ".png"
       });
@@ -235,14 +235,14 @@ const MainPage = () => {
     <>
       <Header username={userName} userImg={userImg}></Header>
       <div className="w-screen absolute top-16 flex justify-center">
-        <div className="flex-col justify-center max-w-5xl">
+        <div className="flex-col justify-center max-w-5xl mx-8">
           <div className="flex mt-12 mb-8">
             <img
               src={stateVar === "WRITE" ? "/write.svg" : "album.svg"}
               alt=""
-              className="mr-4"
+              className="mr-4 w-8"
             ></img>
-            <h1 className="text-5xl font-bold">
+            <h1 className="text-3xl font-bold">
               {stateVar === "WRITE"
                 ? "음악 로그 작성"
                 : stateVar === "LIST"
@@ -250,7 +250,7 @@ const MainPage = () => {
                 : `${userName}님의 플레이어`}
             </h1>
             <button
-              className={`w-30 px-5 py-2 ml-auto text-3xl rounded bg-gray-300 hover:bg-gray-400`}
+              className={`w-30 px-3 py-1 ml-auto text-xl border-2 border-black text-white bg-[#617FF5] hover:bg-gray-300 hover:text-black`}
               onClick={() =>
                 toggleStateVar((prevState) =>
                   prevState === "WRITE" ? "LIST" : "WRITE"

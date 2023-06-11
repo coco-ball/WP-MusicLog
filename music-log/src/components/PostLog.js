@@ -195,7 +195,7 @@ export default function PostLog({ setStateVar, postLogData, updateTime }) {
         {/*<p className="mb-4">{postLogData.location}</p>*/}
         {/* <p className="text-2xl font-bold mb-1">시간</p>
           <p className="mb-4">{datetime}</p> */}
-        <label htmlFor="input-text" className="text-xl font-bold">
+        <label for="input-text" className="text-xl font-bold">
           지금 뭐하고 계시나요? 간단한 메모를 남겨주세요.
         </label>
         <textarea

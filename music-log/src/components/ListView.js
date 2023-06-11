@@ -11,7 +11,7 @@ export default function ListView({ logs }) {
                 alt="앨범 커버"
               ></img>
               <p className="text-center font-bold text-xl mb-1">{log.title}</p>
-              <p className="text-center text-small">{log.artist}</p>
+              <p className="text-center text-small">{log.artist}</p>  
             </div>
             <div key={log.id} className="w-full bg-white p-4 relative">
               <button
