@@ -1,6 +1,6 @@
 export default function MusicBar({ postLogData, setStateVar }) {
   return (
-    <div className="absolute bottom-12 w-full flex justify-center">
+    <div className="fixed bottom-12 w-full flex justify-center">
       {postLogData.isPlaying ? (
         <div className="flex justify-between align-middle bg-white min-w-min w-3/4 py-4 px-16 rounded-md">
           <div className="flex align-middle">
