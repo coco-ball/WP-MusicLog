@@ -53,8 +53,8 @@ const MainPage = () => {
   //장소는 아직
   const location = "서울대학교 83동";
 
-  const [lastUpdatedTime, updateTime] = useState();
-  const [lastPushTime, updatePushTime] = useState();
+  const [lastUpdatedTime, updateTime] = useState("");
+  const [lastPushTime, updatePushTime] = useState("");
 
   //-------------------------------------------------------
   //API로 값 기져오고 변수(state)에 저장
@@ -64,6 +64,7 @@ const MainPage = () => {
     const time2 = localStorage.getItem("lastPushTime");
     updateTime(time);
     updatePushTime(time2);
+    console.log("init state check: ", lastPushTime);
   }
 
 
@@ -217,8 +218,9 @@ const MainPage = () => {
       const timeDifference2 = time2 - time3;
       if (timeDifference2 > wantedDiff3) {
         console.log("마지막 푸시로부터 시간이 지났음");
-        localStorage.setItem("lastPushTime", time2.toISOString());
-        updatePushTime(time2.toISOString());
+        const str = time2.toISOString();
+        localStorage.setItem("lastPushTime", str);
+        updatePushTime(str);
         console.log("state 업데이트 체크: ", lastPushTime);
         makeNoti();
       }
