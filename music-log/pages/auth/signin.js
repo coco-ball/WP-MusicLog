@@ -15,20 +15,32 @@ export default function Signin() {
   }
 
   return (
-    <div className="flex justify-center h-screen">
-      <div className="grid m-auto text-center">
-        <div className="m-4">Not signed in</div>
-        <button
-          className={`w-40
-                    justify-self-center
-                    p-1 mb-4
-                    bg-rose-500 text-white
-                    border border-rose-500 rounded
-                    hover:bg-white hover:text-rose-500`}
-          onClick={() => signIn()}
-        >
-          Sign in
-        </button>
+    <div className="h-screen">
+      <div className="grid ml-20">
+        <div className="mt-10 mb-10 text-7xl font-bold" id="title">Music Log</div>
+        <div className="ml-10 grid grid-cols-2 gap-8">
+          <div id="text" className = "mt-10">
+            <div className="text-3xl font-bold">
+              지금 듣고 있는 노래로
+              <br />하루의 기록을 남겨보세요
+            </div>
+            <div className="text-l mt-5 mb-10">Music Log는 ~~~</div>
+            <button
+              className={`w-40
+                p-3 mb-4 mt-10
+                bg-[#617FF5] text-white
+                border border-[#617FF5]
+                hover:bg-white hover:text-[#617FF5]
+                text-xl font-bold`}
+              onClick={() => signIn()}
+            >
+              SIGN IN
+            </button>
+          </div>
+          <div id="image" className="w-3000">
+            <img src="/The Band.png" alt="The Band" />
+          </div>
+        </div>
       </div>
     </div>
   );
