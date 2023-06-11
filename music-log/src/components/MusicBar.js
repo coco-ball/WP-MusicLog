@@ -1,4 +1,7 @@
+import { useEffect } from "react";
+
 export default function MusicBar({ postLogData, setStateVar }) {
+  
   return (
     <div className="fixed bottom-12 w-full flex justify-center">
       {postLogData.isPlaying ? (

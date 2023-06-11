@@ -25,7 +25,7 @@ export default function ListView({ logs }) {
             <p className="mb-4">{log.location}</p>
             <p className="text-2xl font-bold mb-1">시간</p>
             <p className="mb-4">{log.datetime}</p>
-            <label htmlFor="input-text" className="text-2xl font-bold">
+            <label for="input-text" className="text-2xl font-bold">
               남긴 메모
             </label>
             <p>{log.text}</p>
