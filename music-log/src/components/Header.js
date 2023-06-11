@@ -17,7 +17,7 @@ export default function Header({ username, userImg }) {
         <span className="font-bold">{username}</span>
       </div>
       <button
-        className={`h-8 bg-blue-500 hover:bg-blue-600 text-sm text-white py-1 px-2 rounded`}
+        className={`h-8 bg-blue-500 hover:bg-blue-600 text-sm text-white py-1 px-2 `}
         onClick={() => signOut()}
       >
         Logout

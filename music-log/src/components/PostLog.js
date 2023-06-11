@@ -180,13 +180,13 @@ export default function PostLog({ setStateVar, postLogData, updateTime }) {
   return (
     <div>
       <body className="w-auto flex">
-        <div className="w-72 mr-4 bg-white rounded p-4">
-          <img className="w-auto mb-4 rounded" src={postLogData.imageUrl}></img>
+        <div className="w-72 mr-4 bg-white p-4 shadow-lg">
+          <img className="w-auto mb-4 " src={postLogData.imageUrl}></img>
           <p className="text-center text-3xl mb-1">{postLogData.songTitle}</p>
           <p className="text-center text-2xl">{postLogData.songArtist}</p>
           <p className="text-center text-xl mt-4">{postLogData.isPlaying === true ? "지금 듣고 있는 노래" : "최근에 들은 노래"}</p>
         </div>
-        <div className="w-full bg-white rounded p-4">
+        <div className="w-full bg-white p-4">
           <p className="text-2xl font-bold mb-1">지금 어디에 계시나요?</p>
           <p className="mb-4">{currentLocation}</p>
           {/*<p className="mb-4">{postLogData.location}</p>*/}
@@ -199,12 +199,12 @@ export default function PostLog({ setStateVar, postLogData, updateTime }) {
           <textarea
             id="input-text"
             type="text"
-            className="w-full h-48 p-1 mt-2 rounded bg-gray-200 focus:outline-none focus:bg-gray-300"
+            className="w-full h-48 p-1 mt-2 bg-gray-200 focus:outline-none focus:bg-gray-300"
             value={input}
             onChange={(e) => setInput(e.target.value)}
           ></textarea>
           <button
-            className={`float-right p-2 ml-auto rounded bg-gray-300 hover:bg-gray-400`}
+            className={`float-right p-2 ml-auto bg-gray-300 hover:bg-gray-400`}
             onClick={() => saveLog()}
           >
             작성 완료
