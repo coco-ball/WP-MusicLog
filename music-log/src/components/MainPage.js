@@ -46,6 +46,7 @@ const MainPage = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [songTitle, setSongTitle] = useState("Track");
   const [songArtist, setSongArtist] = useState("Artist");
+  const [uri, setUri] = useState("Artist");
   const [imageUrl, setImageUrl] = useState(
     "https://cdn-icons-png.flaticon.com/512/659/659056.png"
   );
@@ -82,6 +83,7 @@ const MainPage = () => {
       setSongTitle(item.name);
       setSongArtist(item.artists[0].name);
       setImageUrl(item.album.images[0].url);
+      setUri(item.uri);
       localStorage.setItem("title", songTitle);
       localStorage.setItem("singer", songArtist);
       localStorage.setItem("cover", imageUrl);
@@ -157,6 +159,8 @@ const MainPage = () => {
     checkModal();
   }, [isPlaying]);
 
+  console.log(uri);
+
   //------------------------------------------------------
   //변수들을 postLog.js에 넘기기 위해 배열 생성(너무 많아서!)
   const postLogData = {
@@ -222,7 +226,10 @@ const MainPage = () => {
         </div>
         <div className="contents">
           {stateVar === "PLAYER" ? (
-            <WebPlayback token={session.token.token}></WebPlayback>
+            <WebPlayback
+              token={session.token.accessToken}
+              songUri={uri}
+            ></WebPlayback>
           ) : // <WebPlayback token={session.token.accessToken}></WebPlayback>
           stateVar === "WRITE" ? (
             <div className="write">

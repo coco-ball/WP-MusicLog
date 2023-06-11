@@ -19,8 +19,8 @@ const track = {
   artists: [{ name: "" }],
 };
 
-const WebPlayback = () => {
-  const [token, setToken] = useState();
+const WebPlayback = ({ token, songUri }) => {
+  // const [token, setToken] = useState();
   const [player, setPlayer] = useState(null);
   const [is_paused, setPaused] = useState(true);
   const [is_ready, setReady] = useState(false);
@@ -30,29 +30,19 @@ const WebPlayback = () => {
 
   const { data: session } = useSession();
 
-  const getToken = async () => {
-    const res = await fetch("/api/getToken");
-    if (res.status != 200) {
-    } else {
-      const { access_token } = await res.json();
-      console.log(access_token);
-      setToken(access_token);
-    }
-  };
+  // const getToken = async () => {
+  //   const res = await fetch("/api/getToken");
+  //   if (res.status != 200) {
+  //   } else {
+  //     const { access_token } = await res.json();
+  //     console.log(access_token);
+  //     setToken(access_token);
+  //   }
+  // };
 
-  useEffect(() => {
-    getToken();
-  }, [session]);
-
-  // if (!code) {
-  //   redirectToAuthCodeFlow(clientId);
-  // } else {
-  //   const getToken = async () => {
-  //     const accessToken = await getAccessToken(clientId, code);
-  //     console.log(accessToken);
-  //     setToken(accessToken);
-  //   };
-  // }
+  // useEffect(() => {
+  //   getToken();
+  // }, [session]);
 
   const onPlay = (uri) => {
     if (uri === undefined) {
@@ -83,8 +73,6 @@ const WebPlayback = () => {
     document.body.appendChild(script);
 
     window.onSpotifyWebPlaybackSDKReady = () => {
-      const myToken =
-        "BQB-1qyOIzz03P7XLmZPV9seyiRNfn_fnkiB_N4YN4rHgAprZi6rex8lAgNwstjM8Pibra6bNo3CEZX9j40GxrlRfA_4oXT1GP4MAj1BIB2N_pnpXsc3u_D3i81QDtEZ66bhyptxdwEAFc6aRPMyv3Gxy8gWaapaPXBYhKTvhjQ7mjwEbW2I-y1Mza3DNtGCtVcbrzxp-9-nU7kL33PmyGSzHgqUv0l9";
       const player = new window.Spotify.Player({
         name: "Web Playback SDK",
         getOAuthToken: (cb) => {
@@ -138,18 +126,19 @@ const WebPlayback = () => {
     return () => {
       setReady(false);
     };
-  }, [session]);
+  }, [token]);
 
   return (
     <div>
       {is_ready && (
-        //   <Playlist onPlay={onPlay}></Playlist>
-        <Player>
+        // <Playlist onPlay={onPlay}></Playlist>
+        <Player
           onPlay={onPlay}
           onPause={onPause}
           is_paused={is_paused}
           current_track={current_track}
-        </Player>
+          songUri={songUri}
+        ></Player>
       )}
     </div>
   );

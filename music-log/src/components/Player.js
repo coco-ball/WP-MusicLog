@@ -1,7 +1,13 @@
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 
-export default function Player({ onPlay, onPause, is_paused, current_track }) {
+export default function Player({
+  onPlay,
+  onPause,
+  is_paused,
+  current_track,
+  songUri,
+}) {
   const { data } = useSession();
 
   return (
@@ -22,7 +28,9 @@ export default function Player({ onPlay, onPause, is_paused, current_track }) {
                 <img
                   src="play.svg"
                   onClick={() => {
-                    onPlay(current_track?.uri);
+                    // onPlay(current_track?.uri);
+                    console.log(songUri);
+                    onPlay(songUri);
                   }}
                 />
               </div>
@@ -33,6 +41,7 @@ export default function Player({ onPlay, onPause, is_paused, current_track }) {
                 <img
                   src="/pause.svg"
                   onClick={() => {
+                    // console.log(11111111, typeof onPause);
                     onPause();
                   }}
                 />

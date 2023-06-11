@@ -27,10 +27,10 @@ const MusicLog = ({ onDelete }) => {
 
   // Firebase에서 불러오는 함수
   const getLogs = async () => {
-    if (!session?.session?.user?.name) return;
+    if (!session?.token?.user?.name) return;
     const q = query(
       postlogCollection,
-      where("userName", "==", session.session.user.name),
+      where("userName", "==", session.token.user.name),
       orderBy("datetime", "desc")
     );
 

@@ -20,7 +20,6 @@ const getAccessToken = async (refresh_token) => {
       refresh_token,
     }),
   });
-
   return response.json();
 };
 

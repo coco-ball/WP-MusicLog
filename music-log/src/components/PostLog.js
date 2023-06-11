@@ -24,7 +24,7 @@ export default function PostLog({ setStateVar, postLogData, updateTime }) {
   const [logs, setLogs] = useState([]);
   const [input, setInput] = useState("");
 
-  const [currentLocation, setCurrentLocation] = useState('');
+  const [currentLocation, setCurrentLocation] = useState("");
 
   const getLocation = async () => {
     if (navigator.geolocation) {
@@ -32,61 +32,61 @@ export default function PostLog({ setStateVar, postLogData, updateTime }) {
         async (position) => {
           const latitude = position.coords.latitude;
           const longitude = position.coords.longitude;
-          
+
           try {
-            const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyDuljB_xu6sRdGsIx1MzW1wsaoc26ANwMI`);
+            const response = await fetch(
+              `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyDuljB_xu6sRdGsIx1MzW1wsaoc26ANwMI`
+            );
             const data = await response.json();
-            
-            if (data.status === 'OK') {
+
+            if (data.status === "OK") {
               const addressComponents = data.results[0].address_components;
-              let formattedAddress = '';
-              
+              let formattedAddress = "";
+
               // 주소 컴포넌트에서 원하는 부분을 가져와서 주소 형식 생성
               for (let i = 0; i < addressComponents.length; i++) {
                 const component = addressComponents[i];
                 const componentType = component.types[0];
-                
-                if (componentType === 'locality') {
+
+                if (componentType === "locality") {
                   formattedAddress += component.long_name;
-                } else if (componentType === 'administrative_area_level_1') {
+                } else if (componentType === "administrative_area_level_1") {
                   formattedAddress += ` ${component.short_name}`;
-                } else if (componentType === 'administrative_area_level_2') {
+                } else if (componentType === "administrative_area_level_2") {
                   formattedAddress += ` ${component.long_name}`;
-                } else if (componentType === 'postal_code') {
+                } else if (componentType === "postal_code") {
                   formattedAddress += ` (${component.long_name})`;
                 }
               }
-              
+
               setCurrentLocation(formattedAddress);
             } else {
-              console.log('Geocoding API request failed.');
-              const baseloc="대한민국 서울특별시 관악구 신림동"
+              console.log("Geocoding API request failed.");
+              const baseloc = "대한민국 서울특별시 관악구 신림동";
               setCurrentLocation(baseloc);
             }
           } catch (error) {
-            console.log('Error occurred while fetching geocoding data:', error);
-            const baseloc="대한민국 서울특별시 관악구 신림동"
+            console.log("Error occurred while fetching geocoding data:", error);
+            const baseloc = "대한민국 서울특별시 관악구 신림동";
             setCurrentLocation(baseloc);
           }
         },
         (error) => {
           console.log(error);
-          const baseloc="대한민국 서울특별시 관악구 신림동"
+          const baseloc = "대한민국 서울특별시 관악구 신림동";
           setCurrentLocation(baseloc);
         }
       );
     } else {
-      console.log('Geolocation is not supported by this browser.');
-      const baseloc="대한민국 서울특별시 관악구 신림동"
+      console.log("Geolocation is not supported by this browser.");
+      const baseloc = "대한민국 서울특별시 관악구 신림동";
       setCurrentLocation(baseloc);
     }
   };
-  
 
   useEffect(() => {
     getLocation();
   }, []);
-
 
   const getpostlogs = async () => {
     // Firestore 쿼리를 만듭니다.
@@ -95,7 +95,7 @@ export default function PostLog({ setStateVar, postLogData, updateTime }) {
     if (!session?.session?.user?.name) return;
     const q = query(
       postlogCollection,
-      where("userName", "==", session.session.user.name),//userId로 식별하려면 어떻게?
+      where("userName", "==", session.session.user.name), //userId로 식별하려면 어떻게?
       orderBy("datetime", "asc")
     );
 
@@ -125,12 +125,12 @@ export default function PostLog({ setStateVar, postLogData, updateTime }) {
     //const hours = (parseInt(time.substring(0, 2)) + 7).toString().padStart(2, "0");
     //const modifiedTime = hours + ":"+time.substring(2);
 
-    const now = new Date();	
-    const date = String(now).substring(0, 16);;
-    const hour = String(now.getHours()).padStart(2,"0");
-    const minutes = String(now.getMinutes()).padStart(2,"0");
-    const second = String(now.getSeconds()).padStart(2,"0");//number이기 때문에 padStart 붙일 수 없음. String 변환해주어야한다.
- 
+    const now = new Date();
+    const date = String(now).substring(0, 16);
+    const hour = String(now.getHours()).padStart(2, "0");
+    const minutes = String(now.getMinutes()).padStart(2, "0");
+    const second = String(now.getSeconds()).padStart(2, "0"); //number이기 때문에 padStart 붙일 수 없음. String 변환해주어야한다.
+
     const docRef = await addDoc(postlogCollection, {
       userName: postLogData.userName,
       userId: postLogData.userId,
@@ -175,40 +175,42 @@ export default function PostLog({ setStateVar, postLogData, updateTime }) {
   //spotify API연동-->userid, 노래 title, artist, album cover.. 총 7개 항목 불러오기 -->
 
   return (
-    <div>
-      <body className="w-auto flex">
-        <div className="w-72 mr-4 bg-white rounded p-4">
-          <img className="w-auto mb-4 rounded" src={postLogData.imageUrl}></img>
-          <p className="text-center text-3xl mb-1">{postLogData.songTitle}</p>
-          <p className="text-center text-2xl">{postLogData.songArtist}</p>
-          <p className="text-center text-xl mt-4">{postLogData.isPlaying === true ? "지금 듣고 있는 노래" : "최근에 들은 노래"}</p>
-        </div>
-        <div className="w-full bg-white rounded p-4">
-          <p className="text-2xl font-bold mb-1">지금 어디에 계시나요?</p>
-          <p className="mb-4">{currentLocation}</p>
-          {/*<p className="mb-4">{postLogData.location}</p>*/}
-          {/* <p className="text-2xl font-bold mb-1">시간</p>
+    <body className="w-auto flex">
+      <div className="w-72 mr-4 bg-white rounded p-4">
+        <img className="w-auto mb-4 rounded" src={postLogData.imageUrl}></img>
+        <p className="text-center text-3xl mb-1">{postLogData.songTitle}</p>
+        <p className="text-center text-2xl">{postLogData.songArtist}</p>
+        <p className="text-center text-xl mt-4">
+          {postLogData.isPlaying === true
+            ? "지금 듣고 있는 노래"
+            : "최근에 들은 노래"}
+        </p>
+      </div>
+      <div className="w-full bg-white rounded p-4">
+        <p className="text-2xl font-bold mb-1">지금 어디에 계시나요?</p>
+        <p className="mb-4">{currentLocation}</p>
+        {/*<p className="mb-4">{postLogData.location}</p>*/}
+        {/* <p className="text-2xl font-bold mb-1">시간</p>
           <p className="mb-4">{datetime}</p> */}
 
-          <label htmlFor="input-text" className="text-2xl font-bold">
-            지금 뭐하고 계시나요? 간단한 메모를 남겨주세요.
-          </label>
-          <textarea
-            id="input-text"
-            type="text"
-            className="w-full h-48 p-1 mt-2 rounded bg-gray-200 focus:outline-none focus:bg-gray-300"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-          ></textarea>
-          <button
-            className={`float-right p-2 ml-auto rounded bg-gray-300 hover:bg-gray-400`}
-            onClick={() => saveLog()}
-          >
-            작성 완료
-          </button>
-        </div>
-      </body>
-    </div>
+        <label htmlFor="input-text" className="text-2xl font-bold">
+          지금 뭐하고 계시나요? 간단한 메모를 남겨주세요.
+        </label>
+        <textarea
+          id="input-text"
+          type="text"
+          className="w-full h-48 p-1 mt-2 rounded bg-gray-200 focus:outline-none focus:bg-gray-300"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+        ></textarea>
+        <button
+          className={`float-right p-2 ml-auto rounded bg-gray-300 hover:bg-gray-400`}
+          onClick={() => saveLog()}
+        >
+          작성 완료
+        </button>
+      </div>
+    </body>
   );
 }
 

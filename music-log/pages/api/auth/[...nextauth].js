@@ -6,24 +6,43 @@ export default NextAuth({
   providers: [
     SpotifyProvider({
       authorization:
-        "https://accounts.spotify.com/authorize?scope=user-read-email,user-read-playback-state,user-read-currently-playing,streaming,user-read-email,user-read-private,web-playback",
+        "https://accounts.spotify.com/authorize?scope=user-read-email,user-read-playback-state,user-read-currently-playing,streaming,user-read-email,user-read-private",
       // "https://accounts.spotify.com/authorize?response_type=token&scope=user-read-email,user-read-playback-state,user-read-currently-playing,streaming,user-read-email,user-read-private,web-playback",
       clientId: process.env.SPOTIFY_CLIENT_ID,
       clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
     }),
   ],
   callbacks: {
-    async jwt({ token, account }) {
-      //console.log("jwt activated");
-      if (account) {
-        token.accessToken = account.refresh_token;
-        // token.token = account.access_token;
+    // async jwt(token, account) {
+    //   //console.log("jwt activated");
+    //   console.log("account", account);
+    //   if (account) {
+    //     token.accessToken = account.refresh_token;
+    //     token.token = account.access_token;
+    //   }
+    //   console.log(11111111111112122112121);
+    //   console.log(token);
+    //   return token;
+    // },
+
+    async jwt({ token, account, user }) {
+      if (account && user) {
+        console.log(2222222);
+        return {
+          accessToken: account.access_token,
+          refreshToken: account.refresh_token,
+          accessTokenExpires: account.expires_at * 1000,
+          user,
+        };
       }
-      return token;
+      if (token.accessTokenExpires && Date.now() < token.accessTokenExpires) {
+        return token;
+      }
     },
-    async session(session, user) {
+
+    async session(session, user, token) {
       console.log("nextauth file session activated");
-      session.user = user;
+      // session.user = user;
       // session.accessToken = token.accessToken;
       // session.token = token.token;
       console.log(session);

@@ -1,4 +1,4 @@
-const play = ({
+export const play = ({
   spotify_uri,
   device_id,
   position,
@@ -18,7 +18,7 @@ const play = ({
   });
 };
 
-const pause = ({
+export const pause = ({
   device_id,
   playerInstance: {
     _options: { getOAuthToken },
