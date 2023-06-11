@@ -179,6 +179,7 @@ export default function PostLog({ setStateVar, postLogData, updateTime }) {
 
   return (
     <div>
+
       <body className="w-auto min-w-min flex bg-white rounded p-4">
         <div className="w-72 mr-4 ">
           <img className="w-auto mb-4 rounded" src={postLogData.imageUrl}></img>
@@ -196,23 +197,23 @@ export default function PostLog({ setStateVar, postLogData, updateTime }) {
           {/*<p className="mb-4">{postLogData.location}</p>*/}
           {/* <p className="text-2xl font-bold mb-1">시간</p>
           <p className="mb-4">{datetime}</p> */}
-
-          <label htmlFor="input-text" className="text-2xl font-bold">
-            지금 뭐하고 계시나요? 간단한 메모를 남겨주세요.
-          </label>
-          <textarea
-            id="input-text"
-            type="text"
-            className="w-full h-48 p-1 mt-2 rounded bg-gray-200 focus:outline-none focus:bg-gray-300"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-          ></textarea>
-          <button
-            className={`float-right p-2 ml-auto rounded bg-gray-300 hover:bg-gray-400`}
-            onClick={() => saveLog()}
-          >
-            작성 완료
-          </button>
+            <label htmlFor="input-text" className="text-xl font-bold">
+              지금 뭐하고 계시나요? 간단한 메모를 남겨주세요.
+            </label>
+            <textarea
+              id="input-text"
+              type="text"
+              className="w-full h-48 p-1 mt-2 bg-bg-[#E3E6F2] focus:outline-none focus:bg-[#E3E6F2]"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+            ></textarea>
+            <button
+              className={`float-right p-1 ml-auto bg-[#617FF5] hover:bg-[#E3E6F2] text-white border border-black text-sm`}
+              onClick={() => saveLog()}
+            >
+              작성 완료
+            </button>
+          </div>
         </div>
       </body>
     </div>
