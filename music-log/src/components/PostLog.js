@@ -224,14 +224,13 @@ export default function PostLog({ setStateVar, postLogData, updateTime }) {
         {/*<p className="mb-4">{postLogData.location}</p>*/}
         {/* <p className="text-2xl font-bold mb-1">시간</p>
           <p className="mb-4">{datetime}</p> */}
-        <label for="input-text" className="text-xl font-bold">
+        <p className="text-xl font-bold mb-1">
           지금 뭐하고 계시나요? 간단한 메모를 남겨주세요.
-        </label>
+        </p>
         <textarea
           id="input-text"
           type="text"
-          className=
-          {`w-full h-48 p-1 mt-2 bg-[#E3E6F2]
+          className={`w-full h-48 p-1 mt-2 bg-[#E3E6F2]
           border-2 border-black
           focus:outline-none focus:bg-[#E3E6F2]
           `}
@@ -239,8 +238,7 @@ export default function PostLog({ setStateVar, postLogData, updateTime }) {
           onChange={(e) => setInput(e.target.value)}
         ></textarea>
         <button
-          className={
-          `float-right p-1 ml-auto 
+          className={`float-right p-1 ml-auto 
           bg-[#617FF5] hover:bg-[#E3E6F2] 
           text-white text-sm
           border-2 border-black`}
