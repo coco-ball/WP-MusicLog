@@ -179,8 +179,8 @@ export default function PostLog({ setStateVar, postLogData, updateTime }) {
 
   return (
     <body className="w-auto min-w-min flex bg-white rounded p-4">
-      <div className="w-72 mr-4  ">
-        <img className="w-auto mb-4 rounded" src={postLogData.imageUrl}></img>
+      <div className="w-72 mr-4 ">
+        <img className="w-auto mb-4 shadow-[10px_10px_0px_0px_rgba(0,0,0,1)]" src={postLogData.imageUrl}></img>
         <p className="text-center text-3xl mb-1">{postLogData.songTitle}</p>
         <p className="text-center text-2xl">{postLogData.songArtist}</p>
         <p className="text-center text-xl mt-4">
@@ -190,7 +190,7 @@ export default function PostLog({ setStateVar, postLogData, updateTime }) {
         </p>
       </div>
       <div className="w-full">
-        <p className="text-2xl font-bold mb-1">지금 어디에 계시나요?</p>
+        <p className="text-xl font-bold mb-1">지금 어디에 계시나요?</p>
         <p className="mb-4">{currentLocation}</p>
         {/*<p className="mb-4">{postLogData.location}</p>*/}
         {/* <p className="text-2xl font-bold mb-1">시간</p>
@@ -201,15 +201,23 @@ export default function PostLog({ setStateVar, postLogData, updateTime }) {
         <textarea
           id="input-text"
           type="text"
-          className="w-full h-48 p-1 mt-2 bg-bg-[#E3E6F2] focus:outline-none focus:bg-[#E3E6F2]"
+          className=
+          {`w-full h-48 p-1 mt-2 bg-[#E3E6F2]
+          border-2 border-black
+          focus:outline-none focus:bg-[#E3E6F2]
+          `}
           value={input}
           onChange={(e) => setInput(e.target.value)}
         ></textarea>
         <button
-          className={`float-right p-1 ml-auto bg-[#617FF5] hover:bg-[#E3E6F2] text-white border border-black text-sm`}
+          className={
+          `float-right p-1 ml-auto 
+          bg-[#617FF5] hover:bg-[#E3E6F2] 
+          text-white text-sm
+          border-2 border-black`}
           onClick={() => saveLog()}
         >
-          작성 완료
+          저장하기
         </button>
       </div>
     </body>

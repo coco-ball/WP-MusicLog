@@ -15,7 +15,7 @@ const Modal = ({ isOpen, closeModal, setState }) => {
 
   const getMyPlayState = async () => {
     const res = await fetch("/api/playState");
-    console.log("modal state Activated");
+    //console.log("modal state Activated");
     if (res.status != 200) {
       //정상적 응답일 아닐 경우 isPlaying을 처음의 false로 냅둠
     } else {
