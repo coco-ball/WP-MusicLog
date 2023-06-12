@@ -29,12 +29,15 @@ export default function PostLog({ setStateVar, postLogData, updateTime }) {
   const [currentLocation, setCurrentLocation] = useState("Loading...");
 
   const textSizeEdit = async () => {
-    if (postLogData.songTitle.length > 20) {
+    console.log("textSizeEdit activated");
+    if (postLogData.songTitle.length > 15) {
       if (postLogData.songTitle.length > 30) {
         setTextSize1("xl");
       } else {
         setTextSize1("2xl");
       }
+    } else {
+      setTextSize1("3xl");
     }
     if (postLogData.songArtist.length > 20) {
       setTextSize2("xl");
@@ -42,7 +45,14 @@ export default function PostLog({ setStateVar, postLogData, updateTime }) {
   }
 
   useEffect(() => {
-    textSizeEdit();
+    const intervalText = setInterval(() => {
+      textSizeEdit();
+    }, 10000);
+
+
+    return () => {
+      clearInterval(intervalText);
+    };
   }, []);
 
   const getLocation = async () => {

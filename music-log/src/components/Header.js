@@ -11,7 +11,7 @@ export default function Header({ username, userImg }) {
     //     Logout
     //   </button>
     // </div>
-    <header className="fixed top-0 w-full flex justify-between items-center border-b-2 border-black gap-10 px-8 py-3 bg-white">
+    <header className="fixed top-0 w-full flex justify-between items-center border-b-2 border-black gap-10 px-8 py-3 bg-white z-50">
       <div className="font-bold">뮤직 로그</div>
       <div className="flex items-center">
         <img className="w-8 h-8 rounded-full mr-2" src={userImg}></img>
