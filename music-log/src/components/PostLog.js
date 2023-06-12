@@ -23,8 +23,37 @@ export default function PostLog({ setStateVar, postLogData, updateTime }) {
   const { data: session } = useSession();
   const [logs, setLogs] = useState([]);
   const [input, setInput] = useState("");
+  const [textSize1, setTextSize1] = useState("3xl");
+  const [textSize2, setTextSize2] = useState("2xl");
 
   const [currentLocation, setCurrentLocation] = useState("Loading...");
+
+  const textSizeEdit = async () => {
+    console.log("textSizeEdit activated");
+    if (postLogData.songTitle.length > 15) {
+      if (postLogData.songTitle.length > 30) {
+        setTextSize1("xl");
+      } else {
+        setTextSize1("2xl");
+      }
+    } else {
+      setTextSize1("3xl");
+    }
+    if (postLogData.songArtist.length > 20) {
+      setTextSize2("xl");
+    }
+  }
+
+  useEffect(() => {
+    const intervalText = setInterval(() => {
+      textSizeEdit();
+    }, 10000);
+
+
+    return () => {
+      clearInterval(intervalText);
+    };
+  }, []);
 
   const getLocation = async () => {
     if (navigator.geolocation) {
@@ -41,10 +70,10 @@ export default function PostLog({ setStateVar, postLogData, updateTime }) {
 
             console.log(data);
 
-            console.log(data.results[4].formatted_address);
+            console.log(data.results[1].formatted_address);
             if (data.status === "OK") {
               //const addressComponents = data.results[0].address_components;
-              let formattedAddress = data.results[4].formatted_address;
+              let formattedAddress = data.results[1].formatted_address;
 
               // 주소 컴포넌트에서 원하는 부분을 가져와서 주소 형식 생성
               /*for (let i = 0; i < addressComponents.length; i++) {
@@ -180,12 +209,9 @@ export default function PostLog({ setStateVar, postLogData, updateTime }) {
   return (
     <body className="w-auto min-w-min flex bg-white rounded p-4">
       <div className="w-72 mr-4 ">
-        <img
-          className="w-auto mb-4 shadow-[10px_10px_0px_0px_rgba(0,0,0,1)]"
-          src={postLogData.imageUrl}
-        ></img>
-        <p className="text-center text-3xl mb-1">{postLogData.songTitle}</p>
-        <p className="text-center text-2xl">{postLogData.songArtist}</p>
+        <img className="w-auto mb-4 shadow-[10px_10px_0px_0px_rgba(0,0,0,1)]" src={postLogData.imageUrl}></img>
+        <p className={`text-center text-${textSize1} font-bold mb-1`}>{postLogData.songTitle}</p>
+        <p className={`text-center text-${textSize2} mb-1`}>{postLogData.songArtist}</p>
         <p className="text-center text-xl mt-4">
           {postLogData.isPlaying === true
             ? "지금 듣고 있는 노래"
