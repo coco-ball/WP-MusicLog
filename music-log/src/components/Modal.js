@@ -41,7 +41,7 @@ const Modal = ({ isOpen, closeModal, setState }) => {
         isOpen ? "visible" : "invisible"
       }`}
     >
-      <div className="bg-white rounded p-8">
+      <div className="bg-white  border-2 border-black p-8">
         <p className="text-xl font-bold mb-2">
           {session
             ? `${session.session.user.name}님, 지금 ${SongArtist}의 ${SongTitle}을 듣고 있네요!`
@@ -51,13 +51,13 @@ const Modal = ({ isOpen, closeModal, setState }) => {
         <p></p>
         <div className="mt-4 flex justify-end gap-2">
           <button
-            className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
+            className="bg-[#617FF5] hover:bg-[#E3E6F2] text-white  hover:text-black border-2 border-black font-bold py-2 px-4"
             onClick={setState}
           >
             작성하기
           </button>
           <button
-            className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
+            className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 border-2 border-black"
             onClick={closeModal}
           >
             닫기
