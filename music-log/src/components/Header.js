@@ -11,10 +11,11 @@ export default function Header({ username, userImg }) {
     //     Logout
     //   </button>
     // </div>
-    <header className="fixed top-0 w-full flex justify-end items-center gap-10 px-8 py-4 bg-white">
+    <header className="fixed top-0 w-full flex justify-between items-center border-b-2 border-black gap-10 px-8 py-3 bg-white">
+      <div className="font-bold">뮤직 로그</div>
       <div className="flex items-center">
-        <img className="w-8 h-8 rounded-full mr-4" src={userImg}></img>
-        <span className="font-bold">{username}</span>
+        <img className="w-8 h-8 rounded-full mr-2" src={userImg}></img>
+        <span className="font-bold text-sm">{username}</span>
       </div>
       <button
         className={`h-8 hover:text-blue-600 text-sm text-black font-bold py-1 px-2 rounded`}
