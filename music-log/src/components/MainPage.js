@@ -97,6 +97,7 @@ const MainPage = () => {
       localStorage.setItem("title", songTitle);
       localStorage.setItem("singer", songArtist);
       localStorage.setItem("cover", imageUrl);
+      console.log("로컬 스토리지 업데이트됐음");
     }
   };
   //컴포넌트가 렌더링될때 getMyPlayState를 자동으로 실행하기 위한 함수
@@ -227,6 +228,7 @@ const MainPage = () => {
     //const threeHoursInMillis = 3 * 60 * 60 * 1000; // 3시간을 밀리초로 변환
     if (timeDifference > wantedDiff2) {
       console.log("마지막 업데이트로부터 시간이 지났음");
+      updatePushTime(localStorage.getItem("lastPushTime"));
       const time3 = new Date(lastPushTime);
       console.log("마지막 푸시 시간: ", lastPushTime);
       const timeDifference2 = time2 - time3;
