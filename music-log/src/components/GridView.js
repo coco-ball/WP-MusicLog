@@ -8,15 +8,17 @@ export default function GridView({ logs }) {
             src={log.cover}
             alt="앨범 커버"
           ></img>
-          <div className="invisible peer-hover:visible mr-4 bg-white rounded p-4 absolute flex max-w-4xl">
-            <div className="mr-4">
+          <div className="invisible peer-hover:visible mr-4 bg-white border-2 border-black p-4 absolute flex max-w-4xl z-40">
+            <div className="w-44 flex-col justify-center">
               <img
-                className="w-40 mb-4 rounded"
+                className="w-40 rounded mb-2"
                 src={log.cover}
                 alt="앨범 커버"
               ></img>
-              <p className="text-center font-bold text-xl mb-1">{log.title}</p>
-              <p className="text-center ">{log.artist}</p>
+              <p className="text-center w-full font-bold text-xl mb-1 max-w-full pr-4">
+                {log.title}
+              </p>
+              <p className="text-center pr-4">{log.artist}</p>
             </div>
             <div>
               <p className="text-xl font-bold mb-1">위치</p>

@@ -105,7 +105,7 @@ const MusicLog = ({ onDelete }) => {
       {viewMode === "GRID" ? (
         <GridView logs={logs}></GridView>
       ) : (
-        <ListView logs={logs}></ListView>
+        <ListView logs={logs} deleteLog={deleteLog}></ListView>
       )}
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import { useSession } from "next-auth/react";
 
 import Modal from "./Modal";
@@ -11,6 +11,7 @@ import MusicBar from "./MusicBar";
 
 import { getPlaybackState } from "@/pages/lib/Spotify";
 import { data } from "autoprefixer";
+import SubHeader from "./SubHeader";
 
 const MainPage = () => {
   //------------------------------------------------------
@@ -73,7 +74,6 @@ const MainPage = () => {
     console.log("init last push time state check: ", lastPushTime);
   };
 
-
   useEffect(() => {
     initUpdateTime();
   }, []);
@@ -100,7 +100,7 @@ const MainPage = () => {
     }
   };
   //컴포넌트가 렌더링될때 getMyPlayState를 자동으로 실행하기 위한 함수
-  useEffect(() => {
+  useLayoutEffect(() => {
     getMyPlayState();
 
     const interval = setInterval(() => {
@@ -110,9 +110,7 @@ const MainPage = () => {
     return () => {
       clearInterval(interval);
     };
-
   }, [stateVar]);
-
 
   //레퍼런스에서 가져온 사용하지 않는 함수
   /*const getMyPlaylists = async () => {
@@ -132,7 +130,7 @@ const MainPage = () => {
     }
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     getUserProfile();
   }, [session]);
 
@@ -202,16 +200,15 @@ const MainPage = () => {
       getMyPlayState();
       if (isPlaying) {
         let notification = new Notification("Music Log", {
-        body: `지금 ${songArtist}의 ${songTitle}를 듣고 계시네요! 지금의 순간을 간단하게 남겨주세요.`,
-        //icon: ".png"
-      });
+          body: `지금 ${songArtist}의 ${songTitle}를 듣고 계시네요! 지금의 순간을 간단하게 남겨주세요.`,
+          //icon: ".png"
+        });
 
-      //알림 클릭 시 이벤트
-      notification.addEventListener("click", () => {
-        setStateVar("WRITE");
-      });
+        //알림 클릭 시 이벤트
+        notification.addEventListener("click", () => {
+          setStateVar("WRITE");
+        });
       }
-      
     }
   }
 
@@ -254,61 +251,24 @@ const MainPage = () => {
     };
   }, []);
 
-
   useEffect(() => {
     console.log("useeffect로 state 업데이트 체크: ", lastPushTime);
   }, [lastPushTime]);
 
-
   return (
     <>
-      <Header username={userName} userImg={userImg}></Header>
-      <div className="w-screen absolute top-16 flex justify-center">
+      <Header
+        username={userName}
+        userImg={userImg}
+        setStateVar={setStateVar}
+      ></Header>
+      <SubHeader
+        stateVar={stateVar}
+        userName={userName}
+        toggleStateVar={toggleStateVar}
+      ></SubHeader>
+      <div className="w-screen absolute top-40 flex justify-center">
         <div className="flex-col justify-center max-w-5xl mx-8">
-          <div className="flex mt-12 mb-8">
-            <img
-              src={stateVar === "WRITE" ? "/write.svg" : "album.svg"}
-              alt=""
-              className="mr-4 w-8"
-            ></img>
-            <h1 className="text-3xl font-bold">
-              {stateVar === "WRITE"
-                ? "음악 로그 작성"
-                : stateVar === "LIST"
-                ? `${userName}님의 음악로그`
-                : `${userName}님의 플레이어`}
-            </h1>
-            <button
-              className={`w-30 px-3 py-1 ml-auto text-xl border-2 border-black text-white bg-[#617FF5] hover:bg-gray-300 hover:text-black`}
-              onClick={() =>
-                toggleStateVar((prevState) =>
-                  prevState === "WRITE" ? "LIST" : "WRITE"
-                )
-              }
-            >
-              {stateVar === "WRITE" ? "음악 로그 보기" : "로그 작성하기"}
-            </button>
-
-            {/* <button
-              className="fixed bottom-40 right-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-              onClick={openModal}
-            >
-              모달 열기
-            </button> */}
-            {/* <button
-              className="fixed bottom-20 right-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-              onClick={() => toggleStateVar("PLAYER")}
-            >
-              플레이어
-            </button> */}
-            {/* 푸시 알림 보내기 */}
-            {/* <button
-              className="fixed bottom-60 right-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-              onClick={makeNoti}
-            >
-              푸시알림
-            </button> */}
-          </div>
           <div className="contents">
             {stateVar === "PLAYER" ? (
               <Player></Player>
@@ -328,8 +288,16 @@ const MainPage = () => {
           </div>
         </div>
       </div>
-      {stateVar === "LIST" ?(<MusicBar postLogData={postLogData} setStateVar={setStateVar}></MusicBar>):<div></div>}
-      {/* 푸시알림보내기끝 */}
+
+      {stateVar === "LIST" ? (
+        <MusicBar
+          postLogData={postLogData}
+          setStateVar={setStateVar}
+        ></MusicBar>
+      ) : (
+        <div></div>
+      )}
+
       <Modal
         isOpen={modalOpen}
         closeModal={closeModal}
