@@ -12,11 +12,6 @@ export default function Header({ username, userImg, setStateVar }) {
     //   </button>
     // </div>
     <header className="fixed top-0 z-50 w-full flex justify-between align-middle items-center border-b-2 border-black gap-10 px-8 py-3 bg-white">
-      <div className="font-bold">뮤직 로그</div>
-      <div className="flex items-center">
-        <img className="w-8 h-8 rounded-full mr-2" src={userImg}></img>
-        <span className="font-bold text-sm">{username}</span>
-      </div>
       <button
         className="font-bold ml-32"
         onClick={() => {
