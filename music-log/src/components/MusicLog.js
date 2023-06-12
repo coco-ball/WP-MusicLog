@@ -78,7 +78,7 @@ const MusicLog = ({ onDelete }) => {
 
   return (
     <div className="w-auto mt-8 ">
-      <button className="mb-4 absolute top-0 right-40 w-4 mt-2 mr-24">
+      <button className="mb-4 absolute top-24 right-40 w-4 mt-2 mr-24">
         <div className="w-6 ">
           <img
             src="/grid.svg"
@@ -90,7 +90,7 @@ const MusicLog = ({ onDelete }) => {
           />
         </div>
       </button>
-      <button className="mb-4 mb-4 absolute top-0 right-40 w-4 mt-2 mr-16">
+      <button className="mb-4 mb-4 absolute top-24 right-40 w-4 mt-2 mr-16">
         <div className="w-6 ">
           <img
             src="/list.svg"
