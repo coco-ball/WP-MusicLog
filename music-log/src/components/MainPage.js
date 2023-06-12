@@ -9,7 +9,7 @@ import MusicLog from "./MusicLog.js";
 import Notice, { makeNoti } from "./Notice.js";
 import MusicBar from "./MusicBar";
 
-import { getPlaybackState } from "@/pages/lib/Spotify";
+import { getPlaybackState } from "@/pages/api/lib/Spotify";
 import { data } from "autoprefixer";
 import SubHeader from "./SubHeader";
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 
-import { getPlaybackState } from "@/pages/lib/Spotify";
+import { getPlaybackState } from "@/pages/api/lib/Spotify";
 import { data } from "autoprefixer";
 
 //------------
