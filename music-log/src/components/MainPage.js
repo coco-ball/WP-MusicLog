@@ -213,8 +213,8 @@ const MainPage = () => {
     }
   }
 
-  const wantedDiff2 = 1000 * 60 * 10; //마지막 업데이트로부터 5분 이후라면 푸시
-  const wantedDiff3 = 1000 * 60 * 10; //마지막 푸시로부터 3분 이후라면 푸시
+  const wantedDiff2 = 1000 * 60 * 0.1; //마지막 업데이트로부터 5분 이후라면 푸시
+  const wantedDiff3 = 1000 * 60 * 0.1; //마지막 푸시로부터 3분 이후라면 푸시
 
   const sendPush = async () => {
     console.log("sendPush activated");
