@@ -77,7 +77,6 @@ export const getRecentlyPlayed = async (refresh_token) => {
     },
   });
 
-
   if (!response.ok) {
     const errorMessage = `${response.status} (${response.statusText})`;
     throw new Error(`Failed to fetch recently played: ${errorMessage}`);
@@ -85,3 +84,5 @@ export const getRecentlyPlayed = async (refresh_token) => {
 
   return response;
 };
+
+export default getAccessToken;
