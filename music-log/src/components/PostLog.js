@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 
@@ -208,11 +209,12 @@ export default function PostLog({ setStateVar, postLogData, updateTime }) {
   return (
     <body className="w-auto mt-12 min-w-min flex bg-white rounded p-4 border-2 border-black">
       <div className="w-72 mr-12 ">
-        <img
+        <Image
+          alt=""
           // className="w-auto mb-4 shadow-[10px_10px_0px_0px_rgba(0,0,0,1)]"
           className="w-auto mb-4"
           src={postLogData.imageUrl}
-        ></img>
+        ></Image>
         <p className={`text-center text-${textSize1} font-bold mb-1`}>
           {postLogData.songTitle}
         </p>

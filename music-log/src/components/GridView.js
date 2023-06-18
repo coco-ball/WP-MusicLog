@@ -1,20 +1,22 @@
+import Image from "next/image";
+
 export default function GridView({ logs }) {
   return (
     <div className="flex flex-wrap gap-4">
       {logs.map((log, index) => (
         <div key={index}>
-          <img
+          <Image
             className="peer w-32 mb-4 rounded"
             src={log.cover}
             alt="앨범 커버"
-          ></img>
+          ></Image>
           <div className="invisible peer-hover:visible mr-4 bg-white border-2 border-black p-4 absolute flex max-w-4xl z-40">
             <div className="w-44 flex-col justify-center">
-              <img
+              <Image
                 className="w-40 rounded mb-2"
                 src={log.cover}
                 alt="앨범 커버"
-              ></img>
+              ></Image>
               <p className="text-center w-full font-bold text-xl mb-1 max-w-full pr-4">
                 {log.title}
               </p>

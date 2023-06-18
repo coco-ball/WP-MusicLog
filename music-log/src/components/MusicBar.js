@@ -1,17 +1,17 @@
+import Image from "next/image";
 import { useEffect } from "react";
 
 export default function MusicBar({ postLogData, setStateVar }) {
-  
   return (
     <div className="fixed bottom-12 w-full flex justify-center ">
       {postLogData.isPlaying ? (
         <div className="flex justify-between align-middle bg-white min-w-min w-3/4 py-4 px-10 border-2 border-black ">
           <div className="flex align-middle ">
-            <img
+            <Image
               className="w-12 mr-4"
               src={postLogData.imageUrl}
               alt="앨범 커버"
-            ></img>
+            ></Image>
             <div className="flex-col">
               <p className="font-bold">{postLogData.songTitle}</p>
               <p className="text-sm">{postLogData.songArtist}</p>
@@ -27,11 +27,11 @@ export default function MusicBar({ postLogData, setStateVar }) {
       ) : (
         <>
           <div className="flex align-middle py-4 pr-16 pl-12 bg-white  border-2 border-black">
-            <img
+            <Image
               className="w-12 h-12 rounded-full mr-4"
               src={postLogData.userImg}
               alt="앨범 커버"
-            ></img>
+            ></Image>
             <div className="flex-col">
               <p className="text-center">
                 안녕하세요, {postLogData.userName}님!

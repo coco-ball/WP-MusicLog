@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 // import PostLog from "@/src/components/PostLog";
@@ -80,7 +81,8 @@ const MusicLog = ({ onDelete }) => {
     <div className="w-auto mt-8">
       <button className="mb-4 absolute top-0 right-40 w-4 mt-2 mr-36">
         <div className="w-6">
-          <img
+          <Image
+            alt=""
             src="/grid.svg"
             style={{ opacity: viewMode === "GRID" ? 1 : 0.3 }}
             className="hover:opacity-100"
@@ -92,7 +94,8 @@ const MusicLog = ({ onDelete }) => {
       </button>
       <button className="mb-4 absolute top-0 right-40 w-4 mt-2 mr-28">
         <div className="w-6">
-          <img
+          <Image
+            alt=""
             src="/list.svg"
             style={{ opacity: viewMode === "GRID" ? 0.3 : 1 }}
             className="hover:opacity-100"

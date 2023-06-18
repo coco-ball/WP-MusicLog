@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { signOut } from "next-auth/react";
 
 export default function Header({ username, userImg, setStateVar }) {
@@ -23,7 +24,11 @@ export default function Header({ username, userImg, setStateVar }) {
       </button>
       <div className="flex align-middle">
         <div className="flex items-center mr-6 ">
-          <img className="w-8 h-8 rounded-full mr-2" src={userImg}></img>
+          <Image
+            className="w-8 h-8 rounded-full mr-2"
+            src={userImg}
+            alt=""
+          ></Image>
           <span className="font-bold text-sm">{username}</span>
         </div>
         <button

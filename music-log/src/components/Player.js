@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useState } from "react";
 
 export default function Player() {
@@ -9,19 +10,23 @@ export default function Player() {
   return (
     <body className="w-auto flex mt-8">
       <div className="flex-col justify-center w-72 mr-4 bg-white rounded p-4">
-        <img className="w-auto mb-4 rounded" src="/albumCover.jpeg"></img>
+        <Image
+          alt=""
+          className="w-auto mb-4 rounded"
+          src="/albumCover.jpeg"
+        ></Image>
         <div className="flex jusify-between">
-          <img className="float-left" src="/playlist.svg" alt=""></img>
-          <img src="/rewind.svg" alt=""></img>
-          <img
+          <Image className="float-left" src="/playlist.svg" alt=""></Image>
+          <Image src="/rewind.svg" alt=""></Image>
+          <Image
             src={playing === "PLAY" ? "/pause.svg" : "play.svg"}
             alt=""
             onClick={() => {
               togglePlaying();
             }}
-          ></img>
-          <img src="/forward.svg" alt=""></img>
-          <img className="float-right" src="/album.svg" alt=""></img>
+          ></Image>
+          <Image src="/forward.svg" alt=""></Image>
+          <Image className="float-right" src="/album.svg" alt=""></Image>
         </div>
       </div>
     </body>

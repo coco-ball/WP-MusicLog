@@ -1,13 +1,15 @@
+import Image from "next/image";
+
 export default function SubHeader({ stateVar, userName, toggleStateVar }) {
   return (
     <div className="w-screen z-40 flex justify-center fixed top-12">
       <div className="w-4/5 flex mt-12 justify-between max-w-5xl align-center bg-white border-2 border-black py-2 px-4">
         <div className="flex align-center">
-          <img
+          <Image
             src={stateVar === "WRITE" ? "/write.svg" : "album.svg"}
             alt=""
             className="mr-4 w-8"
-          ></img>
+          ></Image>
           <h1 className="text-3xl font-bold leading-normal">
             {stateVar === "WRITE"
               ? "음악 로그 작성"
