@@ -30,7 +30,7 @@ export default function PostLog({ setStateVar, postLogData, updateTime }) {
 
   const textSizeEdit = async () => {
     console.log("textSizeEdit activated");
-    if (postLogData.songTitle.length > 15) {
+    if (postLogData.songTitle.length > 10) {
       if (postLogData.songTitle.length > 30) {
         setTextSize1("xl");
       } else {
@@ -47,12 +47,12 @@ export default function PostLog({ setStateVar, postLogData, updateTime }) {
   useEffect(() => {
     const intervalText = setInterval(() => {
       textSizeEdit();
-    }, 10000);
+    }, 1000);
 
     return () => {
       clearInterval(intervalText);
     };
-  }, []);
+  }, [session]);
 
   const getLocation = async () => {
     if (navigator.geolocation) {
@@ -207,7 +207,7 @@ export default function PostLog({ setStateVar, postLogData, updateTime }) {
   //spotify API연동-->userid, 노래 title, artist, album cover.. 총 7개 항목 불러오기 -->
 
   return (
-    <body className="w-auto mt-12 min-w-min flex bg-white rounded p-4 border-2 border-black">
+    <body className="w-auto mt-12 min-w-min flex bg-white p-4 border-2 border-black">
       <div className="w-1/3 mr-12 ">
         <img
           // className="w-auto mb-4 shadow-[10px_10px_0px_0px_rgba(0,0,0,1)]"
@@ -220,13 +220,13 @@ export default function PostLog({ setStateVar, postLogData, updateTime }) {
         <p className={`text-center text-${textSize2} mb-1`}>
           {postLogData.songArtist}
         </p>
-        <p className="text-center text-xs mt-4">
+        {/*<p className="text-center text-xs mt-4">
           {postLogData.isPlaying === true
             ? "지금 듣고 있는 노래"
             : "최근에 들은 노래"}
-        </p>
+          </p>*/}
       </div>
-      <div className="w-full m-5">
+      <div className="w-full">
         <p className="text-xl font-bold mb-1">지금 어디에 계시나요?</p>
         <p className="mb-4">{currentLocation}</p>
         {/*<p className="mb-4">{postLogData.location}</p>*/}

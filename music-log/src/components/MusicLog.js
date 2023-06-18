@@ -77,36 +77,35 @@ const MusicLog = ({ onDelete }) => {
   };
 
   return (
-<<<<<<< Updated upstream
-    <div className="w-auto mt-8">
-      <button className="mb-4 absolute top-0 right-40 w-4 mt-2 mr-36">
-=======
-    <div className="w-full mt-8">
-      <button className="mb-4">
->>>>>>> Stashed changes
-        <div className="w-6">
-          <img
-            src="/grid.svg"
-            style={{ opacity: viewMode === "GRID" ? 1 : 0.3 }}
-            className="hover:opacity-100"
-            onClick={() => {
-              setViewMode("GRID");
-            }}
-          />
-        </div>
-      </button>
-      <button className="mb-4 absolute top-0 right-40 w-4 mt-2 mr-28">
-        <div className="w-6">
-          <img
-            src="/list.svg"
-            style={{ opacity: viewMode === "GRID" ? 0.3 : 1 }}
-            className="hover:opacity-100"
-            onClick={() => {
-              setViewMode("LIST");
-            }}
-          />
-        </div>
-      </button>
+    <div className="w-full mt-10">
+      <div className="w-full mt-10 flex justify-end">
+  <div className="mb-4">
+    <button className="w-6">
+      <div className="w-6">
+        <img
+          src="/grid.svg"
+          style={{ opacity: viewMode === "GRID" ? 1 : 0.3 }}
+          className="hover:opacity-100"
+          onClick={() => {
+            setViewMode("GRID");
+          }}
+        />
+      </div>
+    </button>
+    <button className="w-6 ml-2 mr-2">
+      <div className="w-6">
+        <img
+          src="/list.svg"
+          style={{ opacity: viewMode === "GRID" ? 0.3 : 1 }}
+          className="hover:opacity-100"
+          onClick={() => {
+            setViewMode("LIST");
+          }}
+        />
+      </div>
+    </button>
+  </div>
+</div>
       {viewMode === "GRID" ? (
         <GridView logs={logs}></GridView>
       ) : (

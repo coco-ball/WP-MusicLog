@@ -18,7 +18,7 @@ export default function MusicBar({ postLogData, setStateVar }) {
             </div>
           </div>
           <button
-            className="bg-[#617FF5] hover:bg-[#E3E6F2] text-white  hover:text-black py-2 px-4 border-2 border-black"
+            className="bg-[#617FF5] hover:bg-[#E3E6F2] text-white  hover:text-black py-2 px-4 border-2 border-black font-bold"
             onClick={() => setStateVar("WRITE")}
           >
             이 노래로 로그 작성하기
