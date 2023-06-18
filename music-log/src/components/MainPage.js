@@ -269,9 +269,9 @@ const MainPage = () => {
         userName={userName}
         toggleStateVar={toggleStateVar}
       ></SubHeader>
-      <div className="w-screen absolute top-40 flex justify-center">
-        <div className="flex-col justify-center max-w-5xl mx-8">
-          <div className="contents">
+      <div className="w-4/5 absolute top-40 flex justify-center">
+        
+          <div className="contents justify-center">
             {stateVar === "PLAYER" ? (
               <Player></Player>
             ) : stateVar === "WRITE" ? (
@@ -288,7 +288,7 @@ const MainPage = () => {
               </div>
             )}
           </div>
-        </div>
+        
       </div>
 
       {stateVar === "LIST" ? (

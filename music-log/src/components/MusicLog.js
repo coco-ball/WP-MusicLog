@@ -77,8 +77,13 @@ const MusicLog = ({ onDelete }) => {
   };
 
   return (
+<<<<<<< Updated upstream
     <div className="w-auto mt-8">
       <button className="mb-4 absolute top-0 right-40 w-4 mt-2 mr-36">
+=======
+    <div className="w-full mt-8">
+      <button className="mb-4">
+>>>>>>> Stashed changes
         <div className="w-6">
           <img
             src="/grid.svg"

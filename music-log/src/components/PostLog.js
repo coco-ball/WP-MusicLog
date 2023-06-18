@@ -149,6 +149,7 @@ export default function PostLog({ setStateVar, postLogData, updateTime }) {
   }, [session]);
 
   const saveLog = async () => {
+    console.log("save log activated")
     if ((input.trim() === "") | !postLogData.isPlaying) return;
 
     //const date = new Date().toISOString().substring(0, 10);
@@ -207,10 +208,10 @@ export default function PostLog({ setStateVar, postLogData, updateTime }) {
 
   return (
     <body className="w-auto mt-12 min-w-min flex bg-white rounded p-4 border-2 border-black">
-      <div className="w-72 mr-12 ">
+      <div className="w-1/3 mr-12 ">
         <img
           // className="w-auto mb-4 shadow-[10px_10px_0px_0px_rgba(0,0,0,1)]"
-          className="w-auto mb-4"
+          className="w-50 mb-4"
           src={postLogData.imageUrl}
         ></img>
         <p className={`text-center text-${textSize1} font-bold mb-1`}>
@@ -225,7 +226,7 @@ export default function PostLog({ setStateVar, postLogData, updateTime }) {
             : "최근에 들은 노래"}
         </p>
       </div>
-      <div className="w-full">
+      <div className="w-full m-5">
         <p className="text-xl font-bold mb-1">지금 어디에 계시나요?</p>
         <p className="mb-4">{currentLocation}</p>
         {/*<p className="mb-4">{postLogData.location}</p>*/}
@@ -237,7 +238,7 @@ export default function PostLog({ setStateVar, postLogData, updateTime }) {
         <textarea
           id="input-text"
           type="text"
-          className={`w-full h-48 p-1 mt-2 bg-[#E3E6F2]
+          className={`w-full h-40 p-1 mt-2 bg-[#E3E6F2]
           border-2 border-black
           focus:outline-none focus:bg-[#E3E6F2]
           `}
@@ -245,9 +246,10 @@ export default function PostLog({ setStateVar, postLogData, updateTime }) {
           onChange={(e) => setInput(e.target.value)}
         ></textarea>
         <button
-          className={`float-right p-1 ml-auto mt-1
+          className={`float-right p-2 ml-auto mt-1
           bg-[#617FF5] hover:bg-[#E3E6F2] 
           text-white text-sm
+          font-bold
           border-2 border-black`}
           onClick={() => saveLog()}
         >
