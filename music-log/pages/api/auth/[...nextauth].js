@@ -22,7 +22,7 @@ export default NextAuth({
     async session(session, user) {
       console.log("nextauth file session activated");
       session.user = user;
-      //console.log(session);
+      console.log(session);
       return session;
     },
   },
